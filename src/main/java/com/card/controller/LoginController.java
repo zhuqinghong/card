@@ -3,17 +3,14 @@ package com.card.controller;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import com.card.domain.entity.UserCard;
-import com.card.domain.service.UserCardService;
+import com.card.domain.entity.CardInfo;
+import com.card.domain.repository.CardInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * Created by qinghong.zhu on 2021/4/18.
@@ -23,7 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class LoginController {
     @Autowired
-    private UserCardService userCardService;
+    private CardInfoRepository cardInfoRepository;
 
     @RequestMapping(value = {"/", "/login.html"})
     public String toLogin(HttpServletRequest request) {
@@ -38,17 +35,17 @@ public class LoginController {
     Object loginCheck(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));
         String passwd = request.getParameter("passwd");
-        UserCard userCard = userCardService.getUserCardByNumber(id);
+        CardInfo cardInfo = cardInfoRepository.findCardByNumber(id);
         HashMap<String, String> res = new HashMap<>();
-        if (userCard == null || userCard.checkOutPassword(passwd)) {
+        if (cardInfo == null || !cardInfo.checkOutPassword(passwd)) {
             res.put("stateCode", "0");
             res.put("msg", "账号或密码错误！");
-        } else if (userCard.isAdmin()) {
-            request.getSession().setAttribute("userCard", userCard);
+        } else if (cardInfo.isAdmin()) {
+            request.getSession().setAttribute("cardInfo", cardInfo);
             res.put("stateCode", "1");
             res.put("msg", "管理员登陆成功！");
         } else {
-            request.getSession().setAttribute("userCard", userCard);
+            request.getSession().setAttribute("cardInfo", cardInfo);
             res.put("stateCode", "2");
             res.put("msg", "普通用户登陆成功！");
         }
