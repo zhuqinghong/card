@@ -7,10 +7,10 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="birth" property="birth" jdbcType="TIMESTAMP" />
     <result column="sex" property="sex" jdbcType="VARCHAR" />
-    <result column="phone" property="phone" jdbcType="INTEGER" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
     <result column="department" property="department" jdbcType="VARCHAR" />
-    <result column="pay_account_number" property="payAccountNumber" jdbcType="INTEGER" />
-    <result column="identity_card" property="identityCard" jdbcType="CHAR" />
+    <result column="pay_account_number" property="payAccountNumber" jdbcType="VARCHAR" />
+    <result column="identity_card" property="identityCard" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -114,8 +114,8 @@
       pay_account_number, identity_card, create_time
       )
     values (#{cardNumber,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{birth,jdbcType=TIMESTAMP}, 
-      #{sex,jdbcType=VARCHAR}, #{phone,jdbcType=INTEGER}, #{department,jdbcType=VARCHAR}, 
-      #{payAccountNumber,jdbcType=INTEGER}, #{identityCard,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}
+      #{sex,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, 
+      #{payAccountNumber,jdbcType=VARCHAR}, #{identityCard,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.card.dao.dto.UserInfoDTO" >
@@ -166,16 +166,16 @@
         #{sex,jdbcType=VARCHAR},
       </if>
       <if test="phone != null" >
-        #{phone,jdbcType=INTEGER},
+        #{phone,jdbcType=VARCHAR},
       </if>
       <if test="department != null" >
         #{department,jdbcType=VARCHAR},
       </if>
       <if test="payAccountNumber != null" >
-        #{payAccountNumber,jdbcType=INTEGER},
+        #{payAccountNumber,jdbcType=VARCHAR},
       </if>
       <if test="identityCard != null" >
-        #{identityCard,jdbcType=CHAR},
+        #{identityCard,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
@@ -207,16 +207,16 @@
         sex = #{record.sex,jdbcType=VARCHAR},
       </if>
       <if test="record.phone != null" >
-        phone = #{record.phone,jdbcType=INTEGER},
+        phone = #{record.phone,jdbcType=VARCHAR},
       </if>
       <if test="record.department != null" >
         department = #{record.department,jdbcType=VARCHAR},
       </if>
       <if test="record.payAccountNumber != null" >
-        pay_account_number = #{record.payAccountNumber,jdbcType=INTEGER},
+        pay_account_number = #{record.payAccountNumber,jdbcType=VARCHAR},
       </if>
       <if test="record.identityCard != null" >
-        identity_card = #{record.identityCard,jdbcType=CHAR},
+        identity_card = #{record.identityCard,jdbcType=VARCHAR},
       </if>
       <if test="record.createTime != null" >
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -233,10 +233,10 @@
       name = #{record.name,jdbcType=VARCHAR},
       birth = #{record.birth,jdbcType=TIMESTAMP},
       sex = #{record.sex,jdbcType=VARCHAR},
-      phone = #{record.phone,jdbcType=INTEGER},
+      phone = #{record.phone,jdbcType=VARCHAR},
       department = #{record.department,jdbcType=VARCHAR},
-      pay_account_number = #{record.payAccountNumber,jdbcType=INTEGER},
-      identity_card = #{record.identityCard,jdbcType=CHAR},
+      pay_account_number = #{record.payAccountNumber,jdbcType=VARCHAR},
+      identity_card = #{record.identityCard,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -258,16 +258,16 @@
         sex = #{sex,jdbcType=VARCHAR},
       </if>
       <if test="phone != null" >
-        phone = #{phone,jdbcType=INTEGER},
+        phone = #{phone,jdbcType=VARCHAR},
       </if>
       <if test="department != null" >
         department = #{department,jdbcType=VARCHAR},
       </if>
       <if test="payAccountNumber != null" >
-        pay_account_number = #{payAccountNumber,jdbcType=INTEGER},
+        pay_account_number = #{payAccountNumber,jdbcType=VARCHAR},
       </if>
       <if test="identityCard != null" >
-        identity_card = #{identityCard,jdbcType=CHAR},
+        identity_card = #{identityCard,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -281,10 +281,10 @@
       name = #{name,jdbcType=VARCHAR},
       birth = #{birth,jdbcType=TIMESTAMP},
       sex = #{sex,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=INTEGER},
+      phone = #{phone,jdbcType=VARCHAR},
       department = #{department,jdbcType=VARCHAR},
-      pay_account_number = #{payAccountNumber,jdbcType=INTEGER},
-      identity_card = #{identityCard,jdbcType=CHAR},
+      pay_account_number = #{payAccountNumber,jdbcType=VARCHAR},
+      identity_card = #{identityCard,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>

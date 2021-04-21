@@ -14,11 +14,11 @@ public class UserInfoDTO implements Serializable {
 
     private String sex;
 
-    private Integer phone;
+    private String phone;
 
     private String department;
 
-    private Integer payAccountNumber;
+    private String payAccountNumber;
 
     private String identityCard;
 
@@ -66,12 +66,12 @@ public class UserInfoDTO implements Serializable {
         this.sex = sex == null ? null : sex.trim();
     }
 
-    public Integer getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Integer phone) {
-        this.phone = phone;
+    public void setPhone(String phone) {
+        this.phone = phone == null ? null : phone.trim();
     }
 
     public String getDepartment() {
@@ -82,12 +82,12 @@ public class UserInfoDTO implements Serializable {
         this.department = department == null ? null : department.trim();
     }
 
-    public Integer getPayAccountNumber() {
+    public String getPayAccountNumber() {
         return payAccountNumber;
     }
 
-    public void setPayAccountNumber(Integer payAccountNumber) {
-        this.payAccountNumber = payAccountNumber;
+    public void setPayAccountNumber(String payAccountNumber) {
+        this.payAccountNumber = payAccountNumber == null ? null : payAccountNumber.trim();
     }
 
     public String getIdentityCard() {

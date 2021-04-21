@@ -38,7 +38,7 @@ public class UserInfo {
     /**
      * 手机号
      */
-    private Integer phone;
+    private String phone;
 
     /**
      * 专业
@@ -48,7 +48,7 @@ public class UserInfo {
     /**
      * 银行卡账户
      */
-    private Integer payAccountNumber;
+    private String payAccountNumber;
 
     /**
      * 身份证号

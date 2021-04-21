@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -32,9 +33,7 @@ public class LoginController {
     //请求参数会根据参数名称默认契约自动绑定到相应方法的入参中
     @RequestMapping(value = "/api/loginCheck", method = RequestMethod.POST)
     public @ResponseBody
-    Object loginCheck(HttpServletRequest request) {
-        int id = Integer.parseInt(request.getParameter("id"));
-        String passwd = request.getParameter("passwd");
+    Object loginCheck(HttpServletRequest request, @RequestParam("id") Integer id, @RequestParam("passwd") String passwd) {
         CardInfo cardInfo = cardInfoRepository.findCardByNumber(id);
         HashMap<String, String> res = new HashMap<>();
         if (cardInfo == null || !cardInfo.checkOutPassword(passwd)) {
@@ -51,7 +50,6 @@ public class LoginController {
         }
         return res;
     }
-
     //
     //@RequestMapping("/admin_main.html")
     //public ModelAndView toAdminMain(HttpServletResponse response) {

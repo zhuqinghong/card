@@ -45,7 +45,7 @@
 
         <table tableName="card_info" domainObjectName="CardInfoDTO" enableDeleteByPrimaryKey="true"
                enableDeleteByExample="true">
-            <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true"/>
+            <generatedKey column="card_number" sqlStatement="SELECT LAST_INSERT_ID()" identity="true"/>
         </table>
 
         <table tableName="user_info" domainObjectName="UserInfoDTO" enableDeleteByPrimaryKey="true"

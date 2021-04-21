@@ -11,7 +11,7 @@ public interface CardInfoDTOMapper {
 
     int deleteByExample(CardInfoDTOExample example);
 
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Integer cardNumber);
 
     int insert(CardInfoDTO record);
 
@@ -21,7 +21,7 @@ public interface CardInfoDTOMapper {
 
     List<CardInfoDTO> selectByExample(CardInfoDTOExample example);
 
-    CardInfoDTO selectByPrimaryKey(Integer id);
+    CardInfoDTO selectByPrimaryKey(Integer cardNumber);
 
     int updateByExampleSelective(@Param("record") CardInfoDTO record, @Param("example") CardInfoDTOExample example);
 

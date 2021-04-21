@@ -1,14 +1,10 @@
 package com.card.domain.repository;
 
-import java.util.List;
-
 import com.card.dao.dto.CardInfoDTO;
-import com.card.dao.dto.CardInfoDTOExample;
 import com.card.dao.generatedMapper.CardInfoDTOMapper;
 import com.card.domain.entity.CardInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.CollectionUtils;
 
 /**
  * Created by qinghong.zhu on 2021/4/20.
@@ -24,9 +20,7 @@ public class CardInfoRepository {
      * 根据一卡通卡号查询卡片信息
      */
     public CardInfo findCardByNumber(Integer cardNumber) {
-        CardInfoDTOExample example = new CardInfoDTOExample();
-        example.createCriteria().andCardNumberEqualTo(cardNumber);
-        List<CardInfoDTO> cardInfoDTOList = cardInfoDTOMapper.selectByExample(example);
-        return CollectionUtils.isEmpty(cardInfoDTOList) ? null : new CardInfo(cardInfoDTOList.get(0));
+        CardInfoDTO cardInfoDTO = cardInfoDTOMapper.selectByPrimaryKey(cardNumber);
+        return cardInfoDTO != null ? new CardInfo(cardInfoDTO) : null;
     }
 }

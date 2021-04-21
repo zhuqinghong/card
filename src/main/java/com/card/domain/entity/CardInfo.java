@@ -12,11 +12,6 @@ import com.card.domain.enums.CardTypeEnum;
  */
 public class CardInfo {
     /**
-     * 卡片id
-     */
-    private Integer id;
-
-    /**
      * 一卡通卡号
      */
     private Integer cardNumber;
@@ -52,7 +47,6 @@ public class CardInfo {
     private Date createTime;
 
     public CardInfo(CardInfoDTO cardInfoDTO) {
-        this.id = cardInfoDTO.getId();
         this.cardNumber = cardInfoDTO.getCardNumber();
         this.cardPassword = cardInfoDTO.getCardPassword();
         this.cardStatus = cardInfoDTO.getCardStatus();

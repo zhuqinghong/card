@@ -2,8 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.card.dao.generatedMapper.CardInfoDTOMapper" >
   <resultMap id="BaseResultMap" type="com.card.dao.dto.CardInfoDTO" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="card_number" property="cardNumber" jdbcType="INTEGER" />
+    <id column="card_number" property="cardNumber" jdbcType="INTEGER" />
     <result column="card_password" property="cardPassword" jdbcType="VARCHAR" />
     <result column="card_status" property="cardStatus" jdbcType="VARCHAR" />
     <result column="card_type" property="cardType" jdbcType="VARCHAR" />
@@ -70,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, card_number, card_password, card_status, card_type, user_id, balance, create_time
+    card_number, card_password, card_status, card_type, user_id, balance, create_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.card.dao.dto.CardInfoDTOExample" >
     select
@@ -90,11 +89,11 @@
     select 
     <include refid="Base_Column_List" />
     from card_info
-    where id = #{id,jdbcType=INTEGER}
+    where card_number = #{cardNumber,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from card_info
-    where id = #{id,jdbcType=INTEGER}
+    where card_number = #{cardNumber,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.card.dao.dto.CardInfoDTOExample" >
     delete from card_info
@@ -103,25 +102,22 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.card.dao.dto.CardInfoDTO" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+    <selectKey resultType="java.lang.Integer" keyProperty="cardNumber" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into card_info (card_number, card_password, card_status, 
-      card_type, user_id, balance, 
-      create_time)
-    values (#{cardNumber,jdbcType=INTEGER}, #{cardPassword,jdbcType=VARCHAR}, #{cardStatus,jdbcType=VARCHAR}, 
-      #{cardType,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{balance,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP})
+    insert into card_info (card_password, card_status, card_type, 
+      user_id, balance, create_time
+      )
+    values (#{cardPassword,jdbcType=VARCHAR}, #{cardStatus,jdbcType=VARCHAR}, #{cardType,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=INTEGER}, #{balance,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.card.dao.dto.CardInfoDTO" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+    <selectKey resultType="java.lang.Integer" keyProperty="cardNumber" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into card_info
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="cardNumber != null" >
-        card_number,
-      </if>
       <if test="cardPassword != null" >
         card_password,
       </if>
@@ -142,9 +138,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="cardNumber != null" >
-        #{cardNumber,jdbcType=INTEGER},
-      </if>
       <if test="cardPassword != null" >
         #{cardPassword,jdbcType=VARCHAR},
       </if>
@@ -174,9 +167,6 @@
   <update id="updateByExampleSelective" parameterType="map" >
     update card_info
     <set >
-      <if test="record.id != null" >
-        id = #{record.id,jdbcType=INTEGER},
-      </if>
       <if test="record.cardNumber != null" >
         card_number = #{record.cardNumber,jdbcType=INTEGER},
       </if>
@@ -205,8 +195,7 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update card_info
-    set id = #{record.id,jdbcType=INTEGER},
-      card_number = #{record.cardNumber,jdbcType=INTEGER},
+    set card_number = #{record.cardNumber,jdbcType=INTEGER},
       card_password = #{record.cardPassword,jdbcType=VARCHAR},
       card_status = #{record.cardStatus,jdbcType=VARCHAR},
       card_type = #{record.cardType,jdbcType=VARCHAR},
@@ -220,9 +209,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.card.dao.dto.CardInfoDTO" >
     update card_info
     <set >
-      <if test="cardNumber != null" >
-        card_number = #{cardNumber,jdbcType=INTEGER},
-      </if>
       <if test="cardPassword != null" >
         card_password = #{cardPassword,jdbcType=VARCHAR},
       </if>
@@ -242,18 +228,17 @@
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where card_number = #{cardNumber,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.card.dao.dto.CardInfoDTO" >
     update card_info
-    set card_number = #{cardNumber,jdbcType=INTEGER},
-      card_password = #{cardPassword,jdbcType=VARCHAR},
+    set card_password = #{cardPassword,jdbcType=VARCHAR},
       card_status = #{cardStatus,jdbcType=VARCHAR},
       card_type = #{cardType,jdbcType=VARCHAR},
       user_id = #{userId,jdbcType=INTEGER},
       balance = #{balance,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
+    where card_number = #{cardNumber,jdbcType=INTEGER}
   </update>
   <select resultMap="BaseResultMap" parameterType="com.card.dao.dto.CardInfoDTOExample" id="selectByExampleWithRowbounds" >
     select

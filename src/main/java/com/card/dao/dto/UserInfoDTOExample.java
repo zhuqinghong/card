@@ -435,52 +435,62 @@ public class UserInfoDTOExample {
             return (Criteria) this;
         }
 
-        public Criteria andPhoneEqualTo(Integer value) {
+        public Criteria andPhoneEqualTo(String value) {
             addCriterion("phone =", value, "phone");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneNotEqualTo(Integer value) {
+        public Criteria andPhoneNotEqualTo(String value) {
             addCriterion("phone <>", value, "phone");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneGreaterThan(Integer value) {
+        public Criteria andPhoneGreaterThan(String value) {
             addCriterion("phone >", value, "phone");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneGreaterThanOrEqualTo(Integer value) {
+        public Criteria andPhoneGreaterThanOrEqualTo(String value) {
             addCriterion("phone >=", value, "phone");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneLessThan(Integer value) {
+        public Criteria andPhoneLessThan(String value) {
             addCriterion("phone <", value, "phone");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneLessThanOrEqualTo(Integer value) {
+        public Criteria andPhoneLessThanOrEqualTo(String value) {
             addCriterion("phone <=", value, "phone");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneIn(List<Integer> values) {
+        public Criteria andPhoneLike(String value) {
+            addCriterion("phone like", value, "phone");
+            return (Criteria) this;
+        }
+
+        public Criteria andPhoneNotLike(String value) {
+            addCriterion("phone not like", value, "phone");
+            return (Criteria) this;
+        }
+
+        public Criteria andPhoneIn(List<String> values) {
             addCriterion("phone in", values, "phone");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneNotIn(List<Integer> values) {
+        public Criteria andPhoneNotIn(List<String> values) {
             addCriterion("phone not in", values, "phone");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneBetween(Integer value1, Integer value2) {
+        public Criteria andPhoneBetween(String value1, String value2) {
             addCriterion("phone between", value1, value2, "phone");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneNotBetween(Integer value1, Integer value2) {
+        public Criteria andPhoneNotBetween(String value1, String value2) {
             addCriterion("phone not between", value1, value2, "phone");
             return (Criteria) this;
         }
@@ -565,52 +575,62 @@ public class UserInfoDTOExample {
             return (Criteria) this;
         }
 
-        public Criteria andPayAccountNumberEqualTo(Integer value) {
+        public Criteria andPayAccountNumberEqualTo(String value) {
             addCriterion("pay_account_number =", value, "payAccountNumber");
             return (Criteria) this;
         }
 
-        public Criteria andPayAccountNumberNotEqualTo(Integer value) {
+        public Criteria andPayAccountNumberNotEqualTo(String value) {
             addCriterion("pay_account_number <>", value, "payAccountNumber");
             return (Criteria) this;
         }
 
-        public Criteria andPayAccountNumberGreaterThan(Integer value) {
+        public Criteria andPayAccountNumberGreaterThan(String value) {
             addCriterion("pay_account_number >", value, "payAccountNumber");
             return (Criteria) this;
         }
 
-        public Criteria andPayAccountNumberGreaterThanOrEqualTo(Integer value) {
+        public Criteria andPayAccountNumberGreaterThanOrEqualTo(String value) {
             addCriterion("pay_account_number >=", value, "payAccountNumber");
             return (Criteria) this;
         }
 
-        public Criteria andPayAccountNumberLessThan(Integer value) {
+        public Criteria andPayAccountNumberLessThan(String value) {
             addCriterion("pay_account_number <", value, "payAccountNumber");
             return (Criteria) this;
         }
 
-        public Criteria andPayAccountNumberLessThanOrEqualTo(Integer value) {
+        public Criteria andPayAccountNumberLessThanOrEqualTo(String value) {
             addCriterion("pay_account_number <=", value, "payAccountNumber");
             return (Criteria) this;
         }
 
-        public Criteria andPayAccountNumberIn(List<Integer> values) {
+        public Criteria andPayAccountNumberLike(String value) {
+            addCriterion("pay_account_number like", value, "payAccountNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayAccountNumberNotLike(String value) {
+            addCriterion("pay_account_number not like", value, "payAccountNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayAccountNumberIn(List<String> values) {
             addCriterion("pay_account_number in", values, "payAccountNumber");
             return (Criteria) this;
         }
 
-        public Criteria andPayAccountNumberNotIn(List<Integer> values) {
+        public Criteria andPayAccountNumberNotIn(List<String> values) {
             addCriterion("pay_account_number not in", values, "payAccountNumber");
             return (Criteria) this;
         }
 
-        public Criteria andPayAccountNumberBetween(Integer value1, Integer value2) {
+        public Criteria andPayAccountNumberBetween(String value1, String value2) {
             addCriterion("pay_account_number between", value1, value2, "payAccountNumber");
             return (Criteria) this;
         }
 
-        public Criteria andPayAccountNumberNotBetween(Integer value1, Integer value2) {
+        public Criteria andPayAccountNumberNotBetween(String value1, String value2) {
             addCriterion("pay_account_number not between", value1, value2, "payAccountNumber");
             return (Criteria) this;
         }

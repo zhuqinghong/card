@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class CardInfoDTO implements Serializable {
-    private Integer id;
-
     private Integer cardNumber;
 
     private String cardPassword;
@@ -21,14 +19,6 @@ public class CardInfoDTO implements Serializable {
     private Date createTime;
 
     private static final long serialVersionUID = 1L;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public Integer getCardNumber() {
         return cardNumber;
@@ -92,7 +82,6 @@ public class CardInfoDTO implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
         sb.append(", cardNumber=").append(cardNumber);
         sb.append(", cardPassword=").append(cardPassword);
         sb.append(", cardStatus=").append(cardStatus);
