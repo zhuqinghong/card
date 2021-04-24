@@ -3,15 +3,19 @@ package com.card.controller;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.card.domain.entity.CardInfo;
+import com.card.domain.entity.UserInfo;
 import com.card.domain.repository.CardInfoRepository;
+import com.card.domain.repository.UserInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Created by qinghong.zhu on 2021/4/18.
@@ -22,6 +26,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class LoginController {
     @Autowired
     private CardInfoRepository cardInfoRepository;
+    @Autowired
+    private UserInfoRepository userInfoRepository;
 
     @RequestMapping(value = {"/", "/login.html"})
     public String toLogin(HttpServletRequest request) {
@@ -29,57 +35,38 @@ public class LoginController {
         return "index";
     }
 
-    //负责处理loginCheck.html请求
-    //请求参数会根据参数名称默认契约自动绑定到相应方法的入参中
     @RequestMapping(value = "/api/loginCheck", method = RequestMethod.POST)
-    public @ResponseBody
-    Object loginCheck(HttpServletRequest request, @RequestParam("id") Integer id, @RequestParam("passwd") String passwd) {
+    @ResponseBody
+    public Object loginCheck(HttpServletRequest request, @RequestParam("id") Integer id, @RequestParam("passwd") String passwd) {
         CardInfo cardInfo = cardInfoRepository.findCardByNumber(id);
         HashMap<String, String> res = new HashMap<>();
         if (cardInfo == null || !cardInfo.checkOutPassword(passwd)) {
             res.put("stateCode", "0");
             res.put("msg", "账号或密码错误！");
-        } else if (cardInfo.isAdmin()) {
-            request.getSession().setAttribute("cardInfo", cardInfo);
-            res.put("stateCode", "1");
-            res.put("msg", "管理员登陆成功！");
         } else {
+            if (cardInfo.isAdmin()) {
+                res.put("stateCode", "1");
+                res.put("msg", "管理员登陆成功！");
+            } else {
+                res.put("stateCode", "2");
+                res.put("msg", "普通用户登陆成功！");
+            }
+            UserInfo userInfo = userInfoRepository.getUserInfoById(cardInfo.getUserId());
             request.getSession().setAttribute("cardInfo", cardInfo);
-            res.put("stateCode", "2");
-            res.put("msg", "普通用户登陆成功！");
+            request.getSession().setAttribute("userInfo", userInfo);
         }
         return res;
     }
-    //
-    //@RequestMapping("/admin_main.html")
-    //public ModelAndView toAdminMain(HttpServletResponse response) {
-    //    return new ModelAndView("admin_main");
-    //}
-    //
-    //@RequestMapping("/reader_main.html")
-    //public ModelAndView toReaderMain(HttpServletResponse response) {
-    //    return new ModelAndView("reader_main");
-    //}
-    //
-    //@RequestMapping("/admin_repasswd.html")
-    //public ModelAndView reAdminPasswd() {
-    //    return new ModelAndView("admin_repasswd");
-    //}
-    //
-    //@RequestMapping("/admin_repasswd_do")
-    //public String reAdminPasswdDo(HttpServletRequest request, String oldPasswd, String newPasswd, String reNewPasswd, RedirectAttributes redirectAttributes) {
-    //   return null;
-    //}
-    //
-    //@RequestMapping("/reader_repasswd.html")
-    //public ModelAndView reReaderPasswd() {
-    //    return new ModelAndView("reader_repasswd");
-    //}
-    //
-    //@RequestMapping("/reader_repasswd_do")
-    //public String reReaderPasswdDo(HttpServletRequest request, String oldPasswd, String newPasswd, String reNewPasswd, RedirectAttributes redirectAttributes) {
-    // return null;
-    //}
+
+    @RequestMapping("/admin_main.html")
+    public ModelAndView toAdminMain(HttpServletResponse response) {
+        return new ModelAndView("admin_main");
+    }
+
+    @RequestMapping("/user_main.html")
+    public ModelAndView toReaderMain(HttpServletResponse response) {
+        return new ModelAndView("user_main");
+    }
 
     //配置404页面
     @RequestMapping("*")

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.card.dao.extendMapper.UserInfoDTOExtendMapper">
+    <resultMap id="BaseResultMap" type="com.card.dao.dto.UserInfoDTO">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="card_number" property="cardNumber" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="birth" property="birth" jdbcType="TIMESTAMP"/>
+        <result column="sex" property="sex" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="department" property="department" jdbcType="VARCHAR"/>
+        <result column="pay_account_number" property="payAccountNumber" jdbcType="VARCHAR"/>
+        <result column="identity_card" property="identityCard" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="queryUserInfoByCondition" resultMap="BaseResultMap">
+        select *
+        from user_info
+        <include refid="condition"/>
+    </select>
+
+    <sql id="condition">
+        where
+        1 = 1
+        <if test="queryUserInfoReq.id > 0">
+            and id = #{ueryUserInfoReq.id}
+        </if>
+        <if test="queryUserInfoReq.cardNumber != null and queryUserInfoReq.cardNumber != ''">
+            and card_number = #{ueryUserInfoReq.cardNumber}
+        </if>
+        <if test="queryUserInfoReq.userName != null and queryUserInfoReq.name != ''">
+            and name LIKE CONCAT('%',#{queryUserInfoReq.userName},'%')
+        </if>
+    </sql>
+
+
+</mapper>

@@ -3,12 +3,15 @@ package com.card.domain.entity;
 import java.util.Date;
 
 import com.card.dao.dto.UserInfoDTO;
+import com.card.domain.req.CreateOrUpdateUserReq;
+import lombok.Getter;
 
 /**
  * Created by qinghong.zhu on 2021/4/20.
  * 用户信息
  * @author qinghong.zhu
  */
+@Getter
 public class UserInfo {
     /**
      * 用户id
@@ -71,5 +74,29 @@ public class UserInfo {
         this.payAccountNumber = userInfoDTO.getPayAccountNumber();
         this.identityCard = userInfoDTO.getIdentityCard();
         this.createTime = userInfoDTO.getCreateTime();
+    }
+
+    public void updateUserInfo(CreateOrUpdateUserReq createOrUpdateUserReq) {
+        this.name = createOrUpdateUserReq.name;
+        this.birth = createOrUpdateUserReq.birth;
+        this.department = createOrUpdateUserReq.department;
+        this.phone = createOrUpdateUserReq.phone;
+        this.sex = createOrUpdateUserReq.sex;
+        this.identityCard = createOrUpdateUserReq.identityCard;
+        this.payAccountNumber = createOrUpdateUserReq.payAccountNumber;
+    }
+
+    public UserInfoDTO getUserInfoDTO() {
+        UserInfoDTO userInfoDTO = new UserInfoDTO();
+        userInfoDTO.setId(id);
+        userInfoDTO.setCardNumber(cardNumber);
+        userInfoDTO.setName(name);
+        userInfoDTO.setBirth(birth);
+        userInfoDTO.setSex(sex);
+        userInfoDTO.setPhone(phone);
+        userInfoDTO.setDepartment(department);
+        userInfoDTO.setPayAccountNumber(payAccountNumber);
+        userInfoDTO.setIdentityCard(identityCard);
+        return userInfoDTO;
     }
 }

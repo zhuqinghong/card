@@ -4,12 +4,14 @@ import java.util.Date;
 
 import com.card.dao.dto.CardInfoDTO;
 import com.card.domain.enums.CardTypeEnum;
+import lombok.Getter;
 
 /**
  * Created by qinghong.zhu on 2021/4/20. 一卡通信息
  *
  * @author qinghong.zhu
  */
+@Getter
 public class CardInfo {
     /**
      * 一卡通卡号

@@ -131,8 +131,7 @@ background-attachment: fixed;">
                                 Cookies.remove('loginStatus');
                             }
                             $("#info").text("提示:登陆成功，跳转中...");
-                            window.location.href="reader_main.html";
-
+                            window.location.href = "user_main.html";
                         }
                     }
                 });
