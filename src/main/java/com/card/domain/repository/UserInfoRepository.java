@@ -3,16 +3,10 @@ package com.card.domain.repository;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.card.dao.dto.CardInfoDTO;
 import com.card.dao.dto.UserInfoDTO;
 import com.card.dao.extendMapper.UserInfoDTOExtendMapper;
-import com.card.dao.generatedMapper.CardInfoDTOMapper;
 import com.card.dao.generatedMapper.UserInfoDTOMapper;
-import com.card.domain.entity.CardInfo;
-import com.card.domain.entity.UserCard;
 import com.card.domain.entity.UserInfo;
-import com.card.domain.enums.CardStatusEnum;
-import com.card.domain.enums.CardTypeEnum;
 import com.card.domain.req.CreateOrUpdateUserReq;
 import com.card.domain.req.QueryUserInfoReq;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,22 +23,6 @@ public class UserInfoRepository {
     private UserInfoDTOMapper userInfoDTOMapper;
     @Autowired
     private UserInfoDTOExtendMapper userInfoDTOExtendMapper;
-    @Autowired
-    private CardInfoDTOMapper cardInfoDTOMapper;
-
-    /**
-     * 创建用户，创建卡片，并建立关联关系
-     */
-    public UserCard createUserInfoAndCard(CreateOrUpdateUserReq createOrUpdateUserReq) {
-        // 创建用户
-        UserInfoDTO userInfoDTO = createUserInfo(createOrUpdateUserReq);
-        // 创建卡片
-        CardInfoDTO cardInfoDTO = createCardInfo(createOrUpdateUserReq, userInfoDTO);
-        // 用户信息中冗余卡片号
-        userInfoDTO.setCardNumber(cardInfoDTO.getCardNumber());
-        userInfoDTOMapper.updateByPrimaryKeySelective(userInfoDTO);
-        return new UserCard(new UserInfo(userInfoDTO), new CardInfo(cardInfoDTO));
-    }
 
     /**
      * 根据用户id 查询 用户信息
@@ -82,10 +60,8 @@ public class UserInfoRepository {
     /**
      * 创建用户
      */
-    private UserInfoDTO createUserInfo(CreateOrUpdateUserReq createOrUpdateUserReq) {
+    public UserInfo createUserInfo(CreateOrUpdateUserReq createOrUpdateUserReq) {
         UserInfoDTO userInfoDTO = new UserInfoDTO();
-        //userInfoDTO.setId();
-        //userInfoDTO.setCardNumber();
         userInfoDTO.setName(createOrUpdateUserReq.name);
         userInfoDTO.setBirth(createOrUpdateUserReq.birth);
         userInfoDTO.setSex(createOrUpdateUserReq.sex);
@@ -93,24 +69,11 @@ public class UserInfoRepository {
         userInfoDTO.setDepartment(createOrUpdateUserReq.department);
         userInfoDTO.setPayAccountNumber(createOrUpdateUserReq.payAccountNumber);
         userInfoDTO.setIdentityCard(createOrUpdateUserReq.identityCard);
-        //userInfoDTO.setCreateTime();
         userInfoDTOMapper.insertSelective(userInfoDTO);
-        return userInfoDTO;
+        return new UserInfo(userInfoDTO);
     }
 
-    /**
-     * 创建用户卡片
-     */
-    private CardInfoDTO createCardInfo(CreateOrUpdateUserReq createOrUpdateUserReq, UserInfoDTO userInfoDTO) {
-        CardInfoDTO cardInfoDTO = new CardInfoDTO();
-        //cardInfoDTO.setCardNumber();
-        cardInfoDTO.setCardPassword(createOrUpdateUserReq.cardPassword);
-        cardInfoDTO.setCardStatus(CardStatusEnum.INIT.name());
-        cardInfoDTO.setCardType(CardTypeEnum.SYSTEM_USER.name());
-        cardInfoDTO.setUserId(userInfoDTO.getId());
-        cardInfoDTO.setBalance(0);
-        //cardInfoDTO.setCreateTime();
-        cardInfoDTOMapper.insertSelective(cardInfoDTO);
-        return cardInfoDTO;
+    public void saveUserInfo(UserInfo userInfo) {
+        userInfoDTOMapper.updateByPrimaryKeySelective(userInfo.getUserInfoDTO());
     }
 }

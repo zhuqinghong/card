@@ -14,11 +14,11 @@ public class QueryUserInfoReq {
     /**
      * 用户Id
      */
-    public Integer id;
+    public int id;
     /**
      * 卡号
      */
-    public Integer cardNumber;
+    public int cardNumber;
     /**
      * 用户名称
      */

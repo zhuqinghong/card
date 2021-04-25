@@ -86,6 +86,13 @@ public class UserInfo {
         this.payAccountNumber = createOrUpdateUserReq.payAccountNumber;
     }
 
+    /**
+     * 给用户发卡
+     */
+    public void receiveCard(Integer cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
     public UserInfoDTO getUserInfoDTO() {
         UserInfoDTO userInfoDTO = new UserInfoDTO();
         userInfoDTO.setId(id);

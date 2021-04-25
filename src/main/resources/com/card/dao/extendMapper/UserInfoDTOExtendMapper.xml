@@ -26,7 +26,7 @@
         <if test="queryUserInfoReq.id > 0">
             and id = #{ueryUserInfoReq.id}
         </if>
-        <if test="queryUserInfoReq.cardNumber != null and queryUserInfoReq.cardNumber != ''">
+        <if test="queryUserInfoReq.cardNumber > 0 ">
             and card_number = #{ueryUserInfoReq.cardNumber}
         </if>
         <if test="queryUserInfoReq.userName != null and queryUserInfoReq.name != ''">

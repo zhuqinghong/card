@@ -6,10 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.card.domain.entity.UserCard;
 import com.card.domain.entity.UserInfo;
-import com.card.domain.repository.UserCardRepository;
-import com.card.domain.repository.UserInfoRepository;
 import com.card.domain.req.CreateOrUpdateUserReq;
 import com.card.domain.req.QueryUserInfoReq;
+import com.card.domain.service.UserCardService;
+import com.card.domain.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,16 +24,16 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class UserManageController {
     @Autowired
-    private UserInfoRepository userInfoRepository;
+    private UserService userService;
     @Autowired
-    private UserCardRepository userCardRepository;
+    private UserCardService userCardService;
 
     @RequestMapping("/admin_user_list.html")
     public ModelAndView adminUserList(QueryUserInfoReq queryUserInfoReq) {
         if (queryUserInfoReq == null) {
             queryUserInfoReq = new QueryUserInfoReq();
         }
-        List<UserInfo> userInfos = userInfoRepository.queryUserInfoByCondition(queryUserInfoReq);
+        List<UserInfo> userInfos = userService.queryUserInfoByCondition(queryUserInfoReq);
         ModelAndView modelAndView = new ModelAndView("admin_user_list");
         modelAndView.addObject("userInfos", userInfos);
         return modelAndView;
@@ -46,14 +46,14 @@ public class UserManageController {
 
     @RequestMapping("/admin_user_create_do.html")
     public String adminUserCreateDo(CreateOrUpdateUserReq createOrUpdateUserReq) {
-        UserCard userCard = userInfoRepository.createUserInfoAndCard(createOrUpdateUserReq);
+        UserCard userCard = userCardService.createUserInfoAndCard(createOrUpdateUserReq);
         return "redirect:/admin_user_list.html";
     }
 
     @RequestMapping("/admin_user_edit.html")
     public ModelAndView adminUserEdit(HttpServletRequest request) {
         int userId = Integer.parseInt(request.getParameter("userId"));
-        UserCard userCard = userCardRepository.getUserCardByUserId(userId);
+        UserCard userCard = userCardService.findUserCardByUserId(userId);
         ModelAndView modelAndView = new ModelAndView("admin_user_edit");
         modelAndView.addObject("userCard", userCard);
         return modelAndView;
@@ -61,13 +61,14 @@ public class UserManageController {
 
     @RequestMapping("/admin_user_edit_do.html")
     public String adminUserEditDo(CreateOrUpdateUserReq createOrUpdateUserReq) {
-        userInfoRepository.updateUserInfo(createOrUpdateUserReq);
+        userService.updateUserInfo(createOrUpdateUserReq);
         return "redirect:/admin_user_list.html";
     }
 
     @RequestMapping("/admin_user_delete.html")
-    public String adminUserDelete(@RequestParam("userId") Integer userId) {
-        userCardRepository.deleteUserCardByUserId(userId);
+    public String adminUserDelete(@RequestParam("userId") Integer userId, HttpServletRequest request) {
+        UserInfo currentUserInfo = (UserInfo)request.getSession().getAttribute("userInfo");
+        userCardService.deleteUserCard(userId, currentUserInfo.getId());
         return "redirect:/admin_user_list.html";
     }
 }
