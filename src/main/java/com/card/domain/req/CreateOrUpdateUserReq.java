@@ -17,7 +17,7 @@ public class CreateOrUpdateUserReq {
     /**
      * 用户id
      */
-    public int id;
+    public Integer id;
 
     /**
      * 姓名

@@ -112,7 +112,7 @@ background-attachment: fixed;">
             else {
                 $.ajax({
                     type: "POST",
-                    url: "api/loginCheck",
+                    url: "login",
                     data: {
                         id:id ,
                         passwd: passwd

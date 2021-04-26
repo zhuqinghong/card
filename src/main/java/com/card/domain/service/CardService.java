@@ -118,4 +118,16 @@ public class CardService {
         // 保存卡片操作日志
         cardOperateRecordDTOMapper.insertSelective(cardOperateRecordDTO);
     }
+
+    /**
+     * 重制密码
+     */
+    public void rePassword(int cardNumber, String newCardPassword, int operateId) {
+        CardInfo cardInfo = cardInfoRepository.findCardByNumber(cardNumber);
+        CardOperateRecordDTO cardOperateRecordDTO = cardInfo.rePassword(operateId, newCardPassword);
+        // 修改卡片信息
+        cardInfoRepository.saveCardInfo(cardInfo);
+        // 保存卡片操作日志
+        cardOperateRecordDTOMapper.insertSelective(cardOperateRecordDTO);
+    }
 }

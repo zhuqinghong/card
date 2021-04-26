@@ -28,7 +28,7 @@ public class UserManageController {
     @Autowired
     private UserCardService userCardService;
 
-    @RequestMapping("/admin_user_list.html")
+    @RequestMapping("/admin_user_list")
     public ModelAndView adminUserList(QueryUserInfoReq queryUserInfoReq) {
         if (queryUserInfoReq == null) {
             queryUserInfoReq = new QueryUserInfoReq();

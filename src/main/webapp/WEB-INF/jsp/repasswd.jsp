@@ -2,15 +2,22 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>${readercard.name}的主页</title>
+    <title>${userInfo.name}的主页</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <script src="js/jquery-3.2.1.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script>
-        $(function () {
-            $('#header').load('reader_header.html');
-        })
-    </script>
+    <c:if test="${cardInfo.isAdmin()}">
+        <jsp:include page="admin_header.jsp"></jsp:include>
+    </c:if>
+    <c:if test="${!cardInfo.isAdmin()}">
+        <jsp:include page="user_header.jsp"></jsp:include>
+    </c:if>
+
+    <%--    <script>--%>
+    <%--        $(function () {--%>
+    <%--            $('#header').load('reader_header.html');--%>
+    <%--        })--%>
+    <%--    </script>--%>
 </head>
 <body background="img/lizhi.jpg" style=" background-repeat:no-repeat ;
 background-size:100% 100%;
@@ -41,7 +48,7 @@ background-attachment: fixed;">
             <h3 class="panel-title">密码修改</h3>
         </div>
         <div class="panel-body">
-            <form method="post" action="reader_repasswd_do" class="form-inline" id="repasswd">
+            <form method="post" action="repasswd_do.html" class="form-inline" id="repasswd">
                 <div class="input-group">
                     <input type="password" id="oldPasswd" name="oldPasswd" placeholder="输入旧密码" class="form-control"
                            class="form-control">

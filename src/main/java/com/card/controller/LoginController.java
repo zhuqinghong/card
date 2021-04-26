@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.card.domain.entity.CardInfo;
 import com.card.domain.entity.UserInfo;
-import com.card.domain.repository.CardInfoRepository;
-import com.card.domain.repository.UserInfoRepository;
+import com.card.domain.service.CardService;
+import com.card.domain.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,20 +25,25 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class LoginController {
     @Autowired
-    private CardInfoRepository cardInfoRepository;
+    private CardService cardService;
     @Autowired
-    private UserInfoRepository userInfoRepository;
+    private UserService userService;
 
-    @RequestMapping(value = {"/", "/login.html"})
+    @RequestMapping(value = {"/index"})
     public String toLogin(HttpServletRequest request) {
-        request.getSession().invalidate();
         return "index";
     }
 
-    @RequestMapping(value = "/api/loginCheck", method = RequestMethod.POST)
+    @RequestMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        request.getSession().invalidate();
+        return "redirect:/index";
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public Object loginCheck(HttpServletRequest request, @RequestParam("id") Integer id, @RequestParam("passwd") String passwd) {
-        CardInfo cardInfo = cardInfoRepository.findCardByNumber(id);
+        CardInfo cardInfo = cardService.findCardByNumber(id);
         HashMap<String, String> res = new HashMap<>();
         if (cardInfo == null || !cardInfo.checkOutPassword(passwd)) {
             res.put("stateCode", "0");
@@ -51,7 +56,7 @@ public class LoginController {
                 res.put("stateCode", "2");
                 res.put("msg", "普通用户登陆成功！");
             }
-            UserInfo userInfo = userInfoRepository.getUserInfoById(cardInfo.getUserId());
+            UserInfo userInfo = userService.getUserInfoById(cardInfo.getUserId());
             request.getSession().setAttribute("cardInfo", cardInfo);
             request.getSession().setAttribute("userInfo", userInfo);
         }
@@ -66,6 +71,15 @@ public class LoginController {
     @RequestMapping("/user_main.html")
     public ModelAndView toReaderMain(HttpServletResponse response) {
         return new ModelAndView("user_main");
+    }
+
+    @RequestMapping("/repasswd_do.html")
+    public String rePassword(HttpServletRequest request) {
+        CardInfo cardInfo = (CardInfo)request.getSession().getAttribute("cardInfo");
+        UserInfo userInfo = (UserInfo)request.getSession().getAttribute("userInfo");
+        String newCardPassword = (String)request.getAttribute("newCardPassword");
+        cardService.rePassword(cardInfo.getCardNumber(), newCardPassword, userInfo.getId());
+        return "redirect:/logout.html";
     }
 
     //配置404页面

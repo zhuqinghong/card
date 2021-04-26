@@ -14,7 +14,7 @@ public class QueryCardInfoReq {
     /**
      * 一卡通卡号
      */
-    public int cardNumber;
+    public Integer cardNumber;
 
     /**
      * 一卡通状态
@@ -29,5 +29,5 @@ public class QueryCardInfoReq {
     /**
      * 一卡通用户id
      */
-    public int userId;
+    public Integer userId;
 }

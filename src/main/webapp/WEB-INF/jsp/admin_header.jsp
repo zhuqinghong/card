@@ -48,7 +48,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="person_repasswd.html">个人信息修改</a></li>
                         <li class="divider"></li>
-                        <li><a href="admin_repasswd.html">密码修改</a></li>
+                        <li><a href="repasswd.html">密码修改</a></li>
                     </ul>
                 </li>
             </ul>

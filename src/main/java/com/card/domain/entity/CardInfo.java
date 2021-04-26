@@ -125,6 +125,14 @@ public class CardInfo {
         return generateOperateRecord(operateId, "DELETE");
     }
 
+    /**
+     * 密码修改
+     */
+    public CardOperateRecordDTO rePassword(int operateId, String newCardPassword) {
+        this.cardPassword = newCardPassword;
+        return generateOperateRecord(operateId, "RE_PASSWORD");
+    }
+
     public CardOperateRecordDTO generateOperateRecord(int operateId, String type) {
         CardOperateRecordDTO cardOperateRecordDTO = new CardOperateRecordDTO();
         cardOperateRecordDTO.setCardNumber(cardNumber);
