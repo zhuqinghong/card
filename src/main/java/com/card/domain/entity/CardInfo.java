@@ -82,9 +82,15 @@ public class CardInfo {
         this.userId = userId;
     }
 
+    /**
+     * 修改卡片信息
+     */
     public CardOperateRecordDTO updateCardInfo(CreateOrUpdateCardReq createOrUpdateCardReq, int operateId) {
-
-        // todo
+        this.cardNumber = createOrUpdateCardReq.cardNumber;
+        this.cardPassword = createOrUpdateCardReq.cardPassword;
+        this.cardStatus = createOrUpdateCardReq.cardStatus;
+        this.cardTypeEnum = CardTypeEnum.valueOf(createOrUpdateCardReq.cardType);
+        this.balance = createOrUpdateCardReq.balance;
         return generateOperateRecord(operateId, "UPDATE");
     }
 

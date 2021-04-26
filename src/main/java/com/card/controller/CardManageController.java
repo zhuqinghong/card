@@ -56,7 +56,7 @@ public class CardManageController {
     }
 
     /**
-     * 删除卡片
+     * 删除卡片，目前卡片信息和用户信息做一个强依赖，删除卡片= 删除用户+删除卡片
      */
     @RequestMapping("/admin_card_delete.html")
     public String adminCardDelete(@RequestParam("userId") Integer userId, HttpServletRequest request) {

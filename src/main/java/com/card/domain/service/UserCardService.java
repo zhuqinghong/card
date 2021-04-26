@@ -6,6 +6,7 @@ import com.card.domain.entity.UserInfo;
 import com.card.domain.req.CreateOrUpdateUserReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by qinghong.zhu on 2021/4/25.
@@ -22,6 +23,7 @@ public class UserCardService {
     /**
      * 1.创建用户 2.创建卡片 3.下发卡片
      */
+    @Transactional(rollbackFor = Exception.class)
     public UserCard createUserInfoAndCard(CreateOrUpdateUserReq createOrUpdateUserReq) {
         // 创建用户
         UserInfo userInfo = userService.createUserInfo(createOrUpdateUserReq);
@@ -34,7 +36,8 @@ public class UserCardService {
     /**
      * 下发卡片给用户
      */
-    private UserCard giveCardToUser(UserInfo userInfo, CardInfo cardInfo) {
+    @Transactional(rollbackFor = Exception.class)
+    public UserCard giveCardToUser(UserInfo userInfo, CardInfo cardInfo) {
         userInfo.receiveCard(cardInfo.getCardNumber());
         cardInfo.sendCard(userInfo.getId());
         userService.saveUserInfo(userInfo);
@@ -54,6 +57,7 @@ public class UserCardService {
     /**
      * 删除用户和卡片
      */
+    @Transactional(rollbackFor = Exception.class)
     public void deleteUserCard(int userId, int operatorId) {
         userService.deleteUserInfoByUserId(userId);
         cardService.deleteCardInfoByUserId(userId, operatorId);

@@ -12,6 +12,7 @@ import com.card.domain.req.CreateOrUpdateUserReq;
 import com.card.domain.req.QueryCardInfoReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by qinghong.zhu on 2021/4/25.
@@ -49,6 +50,7 @@ public class CardService {
     /**
      * 修改卡片信息
      */
+    @Transactional(rollbackFor = Exception.class)
     public void updateCardInfo(CreateOrUpdateCardReq createOrUpdateCardReq, int operateId) {
         CardInfo cardInfo = cardInfoRepository.findCardByNumber(createOrUpdateCardReq.cardNumber);
         CardOperateRecordDTO cardOperateRecordDTO = cardInfo.updateCardInfo(createOrUpdateCardReq, operateId);
@@ -68,6 +70,7 @@ public class CardService {
     /**
      * 卡片激活
      */
+    @Transactional(rollbackFor = Exception.class)
     public void activeCard(Integer cardNumber, int operateId) {
         CardInfo cardInfo = cardInfoRepository.findCardByNumber(cardNumber);
         CardOperateRecordDTO cardOperateRecordDTO = cardInfo.activeCard(operateId);
@@ -80,6 +83,7 @@ public class CardService {
     /**
      * 卡片挂失
      */
+    @Transactional(rollbackFor = Exception.class)
     public void missCard(Integer cardNumber, int operateId) {
         CardInfo cardInfo = cardInfoRepository.findCardByNumber(cardNumber);
         CardOperateRecordDTO cardOperateRecordDTO = cardInfo.missCard(operateId);
@@ -92,6 +96,7 @@ public class CardService {
     /**
      * 卡片锁定
      */
+    @Transactional(rollbackFor = Exception.class)
     public void suspendCard(Integer cardNumber, int operateId) {
         CardInfo cardInfo = cardInfoRepository.findCardByNumber(cardNumber);
         CardOperateRecordDTO cardOperateRecordDTO = cardInfo.suspendCard(operateId);
@@ -104,6 +109,7 @@ public class CardService {
     /**
      * 卡片删除
      */
+    @Transactional(rollbackFor = Exception.class)
     public void deleteCardInfoByUserId(Integer userId, int operateId) {
         CardInfo cardInfo = cardInfoRepository.findCardByUserId(userId);
         cardInfoRepository.deleteCardInfoByUserId(userId);
