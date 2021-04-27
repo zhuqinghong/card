@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * Created by qinghong.zhu on 2021/4/18.
@@ -73,13 +74,23 @@ public class LoginController {
         return new ModelAndView("user_main");
     }
 
-    @RequestMapping("/repasswd_do.html")
-    public String rePassword(HttpServletRequest request) {
+    @RequestMapping("/repasswd.html")
+    public ModelAndView rePasswd() {
+        return new ModelAndView("repasswd");
+    }
+
+    @RequestMapping("/repasswd_do")
+    public String rePasswordDo(HttpServletRequest request, String cardPassword, String newCardPassword, RedirectAttributes redirectAttributes) {
         CardInfo cardInfo = (CardInfo)request.getSession().getAttribute("cardInfo");
         UserInfo userInfo = (UserInfo)request.getSession().getAttribute("userInfo");
-        String newCardPassword = (String)request.getAttribute("newCardPassword");
-        cardService.rePassword(cardInfo.getCardNumber(), newCardPassword, userInfo.getId());
-        return "redirect:/logout.html";
+        if (cardInfo.checkOutPassword(cardPassword)) {
+            cardService.rePassword(cardInfo.getCardNumber(), newCardPassword, userInfo.getId());
+            redirectAttributes.addFlashAttribute("succ", "密码修改成功！");
+            return "redirect:/repasswd.html";
+        } else {
+            redirectAttributes.addFlashAttribute("error", "密码修改失败！");
+            return "redirect:/repasswd.html";
+        }
     }
 
     //配置404页面

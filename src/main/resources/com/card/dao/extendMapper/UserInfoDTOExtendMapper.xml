@@ -29,7 +29,7 @@
         <if test="queryUserInfoReq.cardNumber > 0 ">
             and card_number = #{ueryUserInfoReq.cardNumber}
         </if>
-        <if test="queryUserInfoReq.userName != null and queryUserInfoReq.name != ''">
+        <if test="queryUserInfoReq.userName != null and queryUserInfoReq.userName != ''">
             and name LIKE CONCAT('%',#{queryUserInfoReq.userName},'%')
         </if>
     </sql>

@@ -12,64 +12,57 @@
     <c:if test="${!cardInfo.isAdmin()}">
         <jsp:include page="user_header.jsp"></jsp:include>
     </c:if>
-
-    <%--    <script>--%>
-    <%--        $(function () {--%>
-    <%--            $('#header').load('reader_header.html');--%>
-    <%--        })--%>
-    <%--    </script>--%>
 </head>
 <body background="img/lizhi.jpg" style=" background-repeat:no-repeat ;
 background-size:100% 100%;
 background-attachment: fixed;">
-<div id="header"></div>
-<c:if test="${!empty succ}">
-    <div class="alert alert-success alert-dismissable">
-        <button type="button" class="close" data-dismiss="alert"
-                aria-hidden="true">
-            &times;
-        </button>
-            ${succ}
-    </div>
-</c:if>
-<c:if test="${!empty error}">
-    <div class="alert alert-danger alert-dismissable">
-        <button type="button" class="close" data-dismiss="alert"
-                aria-hidden="true">
-            &times;
-        </button>
-            ${error}
-    </div>
-</c:if>
-
+<%--<div id="header"></div>--%>
+<div style="padding-top: 100px;">
 <div class="col-xs-6 col-md-offset-3" style="position: relative;">
     <div class="panel panel-primary ">
-        <div class="panel-heading">
+        <div class="panel-heading ">
             <h3 class="panel-title">密码修改</h3>
         </div>
         <div class="panel-body">
             <form method="post" action="repasswd_do.html" class="form-inline" id="repasswd">
                 <div class="input-group">
-                    <input type="password" id="oldPasswd" name="oldPasswd" placeholder="输入旧密码" class="form-control"
+                    <input type="password" id="cardPassword" name="cardPassword" placeholder="输入旧密码" class="form-control"
                            class="form-control">
-                    <input type="password" id="newPasswd" name="newPasswd" placeholder="输入新密码" class="form-control"
+                    <input type="password" id="newCardPassword" name="newCardPassword" placeholder="输入新密码" class="form-control"
                            class="form-control">
-                    <input type="password" id="reNewPasswd" name="reNewPasswd" placeholder="再次输入新密码"
+                    <input type="password" id="reNewCardPassword" name="reNewCardPassword" placeholder="再次输入新密码"
                            class="form-control" class="form-control">
                     <em id="tishi" style="color: red"></em>
                     <br/>
-                    <span>
-                            <input type="submit" value="提交" class="btn btn-default">
-            </span>
+                    <span><input type="submit" value="提交" class="btn btn-default"></span>
+                    <c:if test="${!empty succ}">
+                        <div class="alert alert-success alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert"
+                                    aria-hidden="true">
+                                &times;
+                            </button>
+                                ${succ}
+                        </div>
+                    </c:if>
+                    <c:if test="${!empty error}">
+                        <div class="alert alert-danger alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert"
+                                    aria-hidden="true">
+                                &times;
+                            </button>
+                                ${error}
+                        </div>
+                    </c:if>
                 </div>
             </form>
+        </div>
         </div>
     </div>
 </div>
 
 <script>
     $(document).keyup(function () {
-        if ($("#newPasswd").val() != $("#reNewPasswd").val() && $("#newPasswd").val() != "" && $("#reNewPasswd").val() != "" && $("#newPasswd").val().length == $("#reNewPasswd").val().length) {
+        if ($("#newCardPassword").val() != $("#reNewCardPassword").val() && $("#newCardPassword").val() != "" && $("#reNewCardPassword").val() != "" && $("#newCardPassword").val().length == $("#reNewCardPassword").val().length) {
             $("#tishi").text("提示:两次输入的新密码不同，请检查!");
         } else {
             $("#tishi").text("");
@@ -77,10 +70,10 @@ background-attachment: fixed;">
     })
 
     $("#repasswd").submit(function () {
-        if ($("#oldPasswd").val() == '' || $("#newPasswd").val() == '' || $("#reNewPasswd").val() == '') {
+        if ($("#oldPasswd").val() == '' || $("#newCardPassword").val() == '' || $("#reNewCardPassword").val() == '') {
             $("#tishi").text("提示:请填写完整!");
             return false;
-        } else if ($("#newPasswd").val() != $("#reNewPasswd").val()) {
+        } else if ($("#newCardPassword").val() != $("#reNewCardPassword").val()) {
             $("#tishi").text("提示:两次输入的新密码不同，请检查!");
             return false;
         }
