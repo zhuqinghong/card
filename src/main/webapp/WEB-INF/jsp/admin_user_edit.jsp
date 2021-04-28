@@ -6,6 +6,9 @@
     <script src="js/jquery-3.2.1.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <jsp:include page="admin_header.jsp"></jsp:include>
+    <script>
+        document.getElementById("sex").value = "${userCard.userInfo.sex}";
+    </script>
 </head>
 <body background="img/school.jpg" style=" background-repeat:no-repeat ;
 background-size:100% 100%;
@@ -65,12 +68,9 @@ background-attachment: fixed;">
                 <input style="float: right" type="submit" value="添加" class="btn btn-success btn-sm"
                        class="text-left">
                 <script>
-                    $("#sex option[value='" + userCard.userInfo.sex + "']").attr("selected", "selected");
-
                     function mySubmit(flag) {
                         return flag;
                     }
-
                     $("#useredit").submit(function () {
                         if ($("#name").val() == '' || $("#sex").val() == '' || $("#department").val() == '' || $("#birth").val() == '') {
                             alert("请输入必填项！");

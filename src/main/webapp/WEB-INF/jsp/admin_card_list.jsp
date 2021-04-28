@@ -90,6 +90,9 @@ background-attachment: fixed;">
                     <th>创建时间</th>
                     <th>编辑</th>
                     <th>删除</th>
+                    <th>挂失</th>
+                    <th>激活</th>
+                    <td>锁定</td>
                 </tr>
                 </thead>
                 <tbody>
@@ -104,9 +107,26 @@ background-attachment: fixed;">
                         <td><a href="admin_card_edit.html?cardNumber=<c:out value="${card.cardNumber}"></c:out>">
                             <button type="button" class="btn btn-info btn-xs">编辑</button>
                         </a></td>
-                        <td><a href="admin_card_delete.html?userId=<c:out value="${card.userId}"></c:out>">
-                            <button type="button" class="btn btn-danger btn-xs">删除</button>
-                        </a></td>
+                        <td>
+                            <a href="admin_card_delete.html?userId=<c:out value="${card.userId}"></c:out>">
+                                <button type="button" class="btn btn-danger btn-xs">删除</button>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="card_missing.html?userId=<c:out value="${card.userId}"></c:out>">
+                                <button type="button" class="btn btn-danger btn-xs">挂失</button>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="card_active.html?userId=<c:out value="${card.userId}"></c:out>">
+                                <button type="button" class="btn btn-danger btn-xs">激活</button>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="card_suspend.html?userId=<c:out value="${card.userId}"></c:out>">
+                                <button type="button" class="btn btn-danger btn-xs">锁定</button>
+                            </a>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>

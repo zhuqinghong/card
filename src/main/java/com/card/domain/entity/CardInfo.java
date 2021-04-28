@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.card.dao.dto.CardInfoDTO;
 import com.card.dao.dto.CardOperateRecordDTO;
+import com.card.domain.enums.CardOperateEnum;
 import com.card.domain.enums.CardStatusEnum;
 import com.card.domain.enums.CardTypeEnum;
 import com.card.domain.req.CreateOrUpdateCardReq;
@@ -91,7 +92,7 @@ public class CardInfo {
         this.cardStatus = createOrUpdateCardReq.cardStatus;
         this.cardTypeEnum = CardTypeEnum.valueOf(createOrUpdateCardReq.cardType);
         this.balance = createOrUpdateCardReq.balance;
-        return generateOperateRecord(operateId, "UPDATE");
+        return generateOperateRecord(operateId, CardOperateEnum.UPDATE_CARD.name());
     }
 
     /**
@@ -99,7 +100,7 @@ public class CardInfo {
      */
     public CardOperateRecordDTO missCard(int operateId) {
         this.cardStatus = CardStatusEnum.MISSING.name();
-        return generateOperateRecord(operateId, CardStatusEnum.MISSING.name());
+        return generateOperateRecord(operateId, CardOperateEnum.MISSING_CARD.name());
     }
 
     /**
@@ -107,7 +108,7 @@ public class CardInfo {
      */
     public CardOperateRecordDTO activeCard(int operateId) {
         this.cardStatus = CardStatusEnum.ACTIVE.name();
-        return generateOperateRecord(operateId, CardStatusEnum.ACTIVE.name());
+        return generateOperateRecord(operateId, CardOperateEnum.ACTIVE_CARD.name());
     }
 
     /**
@@ -115,14 +116,14 @@ public class CardInfo {
      */
     public CardOperateRecordDTO suspendCard(int operateId) {
         this.cardStatus = CardStatusEnum.SUSPEND.name();
-        return generateOperateRecord(operateId, CardStatusEnum.SUSPEND.name());
+        return generateOperateRecord(operateId, CardOperateEnum.SUSPEND_CARD.name());
     }
 
     /**
      * 卡片删除
      */
     public CardOperateRecordDTO deleteCard(int operateId) {
-        return generateOperateRecord(operateId, "DELETE");
+        return generateOperateRecord(operateId, CardOperateEnum.DELETED_CARD.name());
     }
 
     /**
@@ -130,9 +131,12 @@ public class CardInfo {
      */
     public CardOperateRecordDTO rePassword(int operateId, String newCardPassword) {
         this.cardPassword = newCardPassword;
-        return generateOperateRecord(operateId, "RE_PASSWORD");
+        return generateOperateRecord(operateId, CardOperateEnum.RE_PASSWORD.name());
     }
 
+    /**
+     * 生成卡片操作日志
+     */
     public CardOperateRecordDTO generateOperateRecord(int operateId, String type) {
         CardOperateRecordDTO cardOperateRecordDTO = new CardOperateRecordDTO();
         cardOperateRecordDTO.setCardNumber(cardNumber);

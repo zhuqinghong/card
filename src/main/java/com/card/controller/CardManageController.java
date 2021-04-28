@@ -4,10 +4,13 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.card.dao.dto.CardOperateRecordDTO;
 import com.card.domain.entity.CardInfo;
 import com.card.domain.entity.UserInfo;
+import com.card.domain.repository.CardOperateRecordRepository;
 import com.card.domain.req.CreateOrUpdateCardReq;
 import com.card.domain.req.QueryCardInfoReq;
+import com.card.domain.req.QueryCardOperateLogReq;
 import com.card.domain.service.CardService;
 import com.card.domain.service.UserCardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +30,8 @@ public class CardManageController {
     private CardService cardService;
     @Autowired
     private UserCardService userCardService;
+    @Autowired
+    private CardOperateRecordRepository cardOperateRecordRepository;
 
     @RequestMapping("/admin_card_list.html")
     public ModelAndView adminCardList(QueryCardInfoReq queryCardInfoReq) {
@@ -49,7 +54,7 @@ public class CardManageController {
      * 修改卡片
      */
     @RequestMapping("/admin_card_edit_do.html")
-    public String adminUserEditDo(CreateOrUpdateCardReq createOrUpdateCardReq, HttpServletRequest request) {
+    public String adminCardEditDo(CreateOrUpdateCardReq createOrUpdateCardReq, HttpServletRequest request) {
         UserInfo currentUser = (UserInfo)request.getSession().getAttribute("userInfo");
         cardService.updateCardInfo(createOrUpdateCardReq, currentUser.getId());
         return "redirect:/admin_card_list.html";
@@ -93,5 +98,25 @@ public class CardManageController {
         UserInfo currentUser = (UserInfo)request.getSession().getAttribute("userInfo");
         cardService.suspendCard(cardNumber, currentUser.getId());
         return "redirect:/admin_card_list.html";
+    }
+
+    /**
+     * 卡片日志
+     */
+    @RequestMapping("/admin_card_log.html")
+    public ModelAndView adminCardLog(QueryCardOperateLogReq queryCardOperateLogReq, HttpServletRequest request) {
+        List<CardOperateRecordDTO> cardOperateRecordDTOList = cardOperateRecordRepository.queryByCondition(queryCardOperateLogReq);
+        ModelAndView modelAndView = new ModelAndView("admin_card_log");
+        modelAndView.addObject("cardOperateRecordDTOList", cardOperateRecordDTOList);
+        return modelAndView;
+    }
+
+    /**
+     * 卡片日志
+     */
+    @RequestMapping("/admin_card_log_delete.html")
+    public String adminCardLog(HttpServletRequest request) {
+        cardOperateRecordRepository.deleteRecord((Integer)request.getAttribute("id"));
+        return "redirect:/admin_card_log.html";
     }
 }

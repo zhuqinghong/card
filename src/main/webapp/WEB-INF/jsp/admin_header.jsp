@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <nav style="position:fixed;z-index: 999;width: 100%;background-color: #25c6fc" class="navbar navbar-default"
      role="navigation">
@@ -46,7 +47,7 @@
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="person_repasswd.html">个人信息修改</a></li>
+                        <li><a href="admin_user_edit.html?userId=<c:out value="${userInfo.id}"></c:out>">个人信息修改</a></li>
                         <li class="divider"></li>
                         <li><a href="repasswd.html">密码修改</a></li>
                     </ul>

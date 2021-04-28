@@ -1,10 +1,15 @@
 package com.card.domain.req;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Created by qinghong.zhu on 2021/4/25.
  *
  * @author qinghong.zhu
  */
+@Setter
+@Getter
 public class CreateOrUpdateCardReq {
     /**
      * 一卡通卡号
