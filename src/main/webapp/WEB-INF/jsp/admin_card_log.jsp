@@ -90,7 +90,7 @@ background-attachment: fixed;">
                         <td><c:out value="${log.operatorId}"></c:out></td>
                         <td><c:out value="${CardOperateEnum.getDesc(log.type)}"></c:out></td>
                         <td><c:out value="${log.createTime}"></c:out></td>
-                        <td><a href="admin_card_log_delete.html?id=<c:out value="${card.userId}"></c:out>">
+                        <td><a href="admin_card_log_delete.html?id=<c:out value="${log.id}"></c:out>">
                             <button type="button" class="btn btn-danger btn-xs">删除</button>
                         </a></td>
                     </tr>

@@ -116,7 +116,7 @@ public class CardManageController {
      */
     @RequestMapping("/admin_card_log_delete.html")
     public String adminCardLog(HttpServletRequest request) {
-        cardOperateRecordRepository.deleteRecord((Integer)request.getAttribute("id"));
+        cardOperateRecordRepository.deleteRecord(Integer.parseInt(request.getParameter("id")));
         return "redirect:/admin_card_log.html";
     }
 }
