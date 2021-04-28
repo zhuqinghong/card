@@ -20,16 +20,16 @@
         where
         1 = 1
         <if test="queryCardInfoReq.cardNumber > 0">
-            and card_number = #{ueryUserInfoReq.cardNumber}
+            and card_number = #{queryCardInfoReq.cardNumber}
         </if>
         <if test="queryCardInfoReq.cardStatus !=null and queryCardInfoReq.cardStatus !=''">
-            and card_status = #{ueryUserInfoReq.cardStatus}
+            and card_status = #{queryCardInfoReq.cardStatus}
         </if>
         <if test="queryCardInfoReq.cardType !=null and queryCardInfoReq.cardType !=''">
-            and card_type = #{ueryUserInfoReq.cardType}
+            and card_type = #{queryCardInfoReq.cardType}
         </if>
         <if test="queryCardInfoReq.userId > 0">
-            and user_id = #{ueryUserInfoReq.userId}
+            and user_id = #{queryCardInfoReq.userId}
         </if>
     </sql>
 </mapper>

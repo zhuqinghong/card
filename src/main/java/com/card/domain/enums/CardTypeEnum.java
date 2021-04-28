@@ -17,4 +17,8 @@ public enum CardTypeEnum {
     public boolean isAdmin() {
         return this.equals(ADMIN);
     }
+
+    public String getDesc() {
+        return this.desc;
+    }
 }

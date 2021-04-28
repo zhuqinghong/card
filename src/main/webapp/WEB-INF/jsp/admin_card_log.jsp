@@ -17,7 +17,7 @@ background-attachment: fixed;">
 
 <div>
     <div style="padding-top: 70px; padding-bottom: 30px;width: 90%;margin-left: 5%">
-        <form method="post" action="admin_card_log.html" id="queryCardInfoReq">
+        <form method="post" action="admin_card_log.html" id="queryCardOperateLogReq">
             <div style="display: flex; width: inherit; float:left ">
                 <div>
                     <input type="text" placeholder="输入卡号" class="form-control" id="cardNumber" name="cardNumber">

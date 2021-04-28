@@ -21,10 +21,10 @@
             and card_number = #{queryCardOperateLogReq.cardNumber}
         </if>
         <if test="queryCardOperateLogReq.cardOperateEnum !=null and queryCardOperateLogReq.cardOperateEnum !=''">
-            and type = #{ueryUserInfoReq.cardOperateEnum}
+            and type = #{queryCardOperateLogReq.cardOperateEnum}
         </if>
         <if test="queryCardOperateLogReq.operateId > 0">
-            and operator_id = #{ueryUserInfoReq.operateId}
+            and operator_id = #{queryCardOperateLogReq.operateId}
         </if>
     </sql>
 

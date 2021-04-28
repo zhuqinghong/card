@@ -24,10 +24,10 @@
         where
         1 = 1
         <if test="queryUserInfoReq.id > 0">
-            and id = #{ueryUserInfoReq.id}
+            and id = #{queryUserInfoReq.id}
         </if>
         <if test="queryUserInfoReq.cardNumber > 0 ">
-            and card_number = #{ueryUserInfoReq.cardNumber}
+            and card_number = #{queryUserInfoReq.cardNumber}
         </if>
         <if test="queryUserInfoReq.userName != null and queryUserInfoReq.userName != ''">
             and name LIKE CONCAT('%',#{queryUserInfoReq.userName},'%')

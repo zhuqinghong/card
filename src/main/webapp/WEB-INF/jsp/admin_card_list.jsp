@@ -7,6 +7,9 @@
     <script src="js/jquery-3.2.1.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <jsp:include page="admin_header.jsp"></jsp:include>
+    <%@ page import="com.card.domain.enums.CardStatusEnum" %>
+
+
 </head>
 <body background="img/book1.jpg" style=" background-repeat:no-repeat ;
 background-size:100% 100%;
@@ -100,8 +103,8 @@ background-attachment: fixed;">
                     <tr>
                         <td><c:out value="${card.cardNumber}"></c:out></td>
                         <td><c:out value="${card.userId}"></c:out></td>
-                        <td><c:out value="${card.cardStatus}"></c:out></td>
-                        <td><c:out value="${card.cardTypeEnum}"></c:out></td>
+                        <td><c:out value="${CardStatusEnum.getType(card.cardStatus)}"></c:out></td>
+                        <td><c:out value="${card.cardTypeEnum.desc}"></c:out></td>
                         <td><c:out value="${card.balance}"></c:out></td>
                         <td><c:out value="${card.createTime}"></c:out></td>
                         <td><a href="admin_card_edit.html?cardNumber=<c:out value="${card.cardNumber}"></c:out>">
@@ -113,17 +116,17 @@ background-attachment: fixed;">
                             </a>
                         </td>
                         <td>
-                            <a href="card_missing.html?userId=<c:out value="${card.userId}"></c:out>">
+                            <a href="card_missing.html?cardNumber=<c:out value="${card.cardNumber}"></c:out>">
                                 <button type="button" class="btn btn-danger btn-xs">挂失</button>
                             </a>
                         </td>
                         <td>
-                            <a href="card_active.html?userId=<c:out value="${card.userId}"></c:out>">
+                            <a href="card_active.html?cardNumber=<c:out value="${card.cardNumber}"></c:out>">
                                 <button type="button" class="btn btn-danger btn-xs">激活</button>
                             </a>
                         </td>
                         <td>
-                            <a href="card_suspend.html?userId=<c:out value="${card.userId}"></c:out>">
+                            <a href="card_suspend.html?cardNumber=<c:out value="${card.cardNumber}"></c:out>">
                                 <button type="button" class="btn btn-danger btn-xs">锁定</button>
                             </a>
                         </td>

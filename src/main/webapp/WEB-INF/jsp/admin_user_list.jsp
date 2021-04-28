@@ -80,7 +80,14 @@ background-attachment: fixed;">
                         <td><c:out value="${user.id}"></c:out></td>
                         <td><c:out value="${user.cardNumber}"></c:out></td>
                         <td><c:out value="${user.name}"></c:out></td>
-                        <td><c:out value="${user.sex}"></c:out></td>
+                        <td>
+                            <c:if test="${user.sex.equals('male')}">
+                                男
+                            </c:if>
+                            <c:if test="${user.sex.equals('female')}">
+                                女
+                            </c:if>
+                        </td>
                         <td><c:out value="${user.birth}"></c:out></td>
                         <td><c:out value="${user.department}"></c:out></td>
                         <td><c:out value="${user.phone}"></c:out></td>
