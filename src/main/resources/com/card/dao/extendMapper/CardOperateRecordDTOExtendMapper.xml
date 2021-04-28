@@ -6,8 +6,9 @@
         <result column="card_number" property="cardNumber" jdbcType="INTEGER"/>
         <result column="operator_id" property="operatorId" jdbcType="INTEGER"/>
         <result column="type" property="type" jdbcType="VARCHAR"/>
-        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>s
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
     </resultMap>
+
     <select id="queryByCondition" resultMap="BaseResultMap">
         select *
         from card_operate_record
@@ -25,7 +26,6 @@
         <if test="queryCardOperateLogReq.operateId > 0">
             and operator_id = #{ueryUserInfoReq.operateId}
         </if>
-
     </sql>
 
 </mapper>
