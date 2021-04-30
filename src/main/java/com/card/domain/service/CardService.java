@@ -2,11 +2,14 @@ package com.card.domain.service;
 
 import java.util.List;
 
+import com.card.dao.dto.CardBillRecordDTO;
 import com.card.dao.dto.CardOperateRecordDTO;
+import com.card.dao.generatedMapper.CardBillRecordDTOMapper;
 import com.card.dao.generatedMapper.CardOperateRecordDTOMapper;
 import com.card.domain.entity.CardInfo;
 import com.card.domain.entity.UserInfo;
 import com.card.domain.repository.CardInfoRepository;
+import com.card.domain.req.CardTradeReq;
 import com.card.domain.req.CreateOrUpdateCardReq;
 import com.card.domain.req.CreateOrUpdateUserReq;
 import com.card.domain.req.QueryCardInfoReq;
@@ -25,6 +28,8 @@ public class CardService {
     private CardInfoRepository cardInfoRepository;
     @Autowired
     private CardOperateRecordDTOMapper cardOperateRecordDTOMapper;
+    @Autowired
+    private CardBillRecordDTOMapper cardBillRecordDTOMapper;
 
     /**
      * 创建用户卡片
@@ -129,5 +134,17 @@ public class CardService {
         cardInfoRepository.saveCardInfo(cardInfo);
         // 保存卡片操作日志
         cardOperateRecordDTOMapper.insertSelective(cardOperateRecordDTO);
+    }
+
+    /**
+     * 卡片交易 充值/消费
+     */
+    public CardInfo cardTrade(CardTradeReq cardTradeReq, Integer cardNumber) {
+        CardInfo cardInfo = findCardByNumber(cardNumber);
+        CardBillRecordDTO cardBillRecordDTO = cardInfo.trade(cardTradeReq);
+        // 修改卡片信息
+        cardInfoRepository.saveCardInfo(cardInfo);
+        cardBillRecordDTOMapper.insertSelective(cardBillRecordDTO);
+        return cardInfo;
     }
 }

@@ -36,9 +36,11 @@
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="lendlist.html">充值/消费</a></li>
+                        <li><a href="card_charge.html">充值</a></li>
                         <li class="divider"></li>
-                        <li><a href="lendlist.html">卡片流水日志</a></li>
+                        <li><a href="card_consume.html">消费</a></li>
+                        <li class="divider"></li>
+                        <li><a href="card_bill_log.html">卡片流水</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">

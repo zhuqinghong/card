@@ -2,11 +2,13 @@ package com.card.domain.entity;
 
 import java.util.Date;
 
+import com.card.dao.dto.CardBillRecordDTO;
 import com.card.dao.dto.CardInfoDTO;
 import com.card.dao.dto.CardOperateRecordDTO;
 import com.card.domain.enums.CardOperateEnum;
 import com.card.domain.enums.CardStatusEnum;
 import com.card.domain.enums.CardTypeEnum;
+import com.card.domain.req.CardTradeReq;
 import com.card.domain.req.CreateOrUpdateCardReq;
 import lombok.Getter;
 
@@ -143,6 +145,23 @@ public class CardInfo {
         cardOperateRecordDTO.setOperatorId(operateId);
         cardOperateRecordDTO.setType(type);
         return cardOperateRecordDTO;
+    }
+
+    /**
+     * 卡片消费/充值
+     */
+    public CardBillRecordDTO trade(CardTradeReq cardTradeReq) {
+        if (this.balance + cardTradeReq.amount < 0) {
+            throw new RuntimeException("卡片余额不足够");
+        }
+        // trade
+        this.balance = this.balance + cardTradeReq.amount;
+        CardBillRecordDTO cardBillRecordDTO = new CardBillRecordDTO();
+        cardBillRecordDTO.setAmount(cardTradeReq.amount);
+        cardBillRecordDTO.setAfterAmount(this.balance);
+        cardBillRecordDTO.setType(cardTradeReq.type);
+        cardBillRecordDTO.setDetail(cardTradeReq.detail);
+        return cardBillRecordDTO;
     }
 
     /**

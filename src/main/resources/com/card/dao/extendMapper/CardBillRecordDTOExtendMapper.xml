@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.card.dao.extendMapper.CardBillRecordDTOExtendMapper">
+    <resultMap id="BaseResultMap" type="com.card.dao.dto.CardBillRecordDTO">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="card_number" property="cardNumber" jdbcType="INTEGER"/>
+        <result column="amount" property="amount" jdbcType="INTEGER"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="after_amount" property="afterAmount" jdbcType="INTEGER"/>
+        <result column="detail" property="detail" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <select id="queryByCondition" resultMap="BaseResultMap">
+        select *
+        from card_bill_record
+        <include refid="condition"/>
+    </select>
+
+    <sql id="condition">
+        where
+        1 = 1
+        <if test="queryCardBillLogReq.id > 0">
+            and id = #{queryCardBillLogReq.id}
+        </if>
+        <if test="queryCardBillLogReq.cardNumber > 0 ">
+            and card_number = #{queryCardBillLogReq.cardNumber}
+        </if>
+        <if test="queryCardBillLogReq.minAmount > 0 ">
+            and amount >= #{queryCardBillLogReq.minAmount}
+        </if>
+        <if test="queryCardBillLogReq.maxAmount > 0 ">
+            and #{queryCardBillLogReq.maxAmount} >= amount
+        </if>
+        <if test="queryCardBillLogReq.type > 0 ">
+            and type = #{queryCardBillLogReq.type}
+        </if>
+    </sql>
+
+</mapper>

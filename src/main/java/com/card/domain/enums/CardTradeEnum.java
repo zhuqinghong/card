@@ -5,7 +5,7 @@ package com.card.domain.enums;
  *
  * @author qinghong.zhu
  */
-public enum CardBillEnum {
+public enum CardTradeEnum {
     CHARGE,
     CONSUMING
 }
