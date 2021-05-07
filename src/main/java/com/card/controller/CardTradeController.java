@@ -1,6 +1,7 @@
 package com.card.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,8 @@ import com.card.domain.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -31,12 +34,53 @@ public class CardTradeController {
     /**
      * 消费
      */
-    @RequestMapping("/card_bill_log.html")
-    public ModelAndView cardConsume(CardTradeReq cardTradeReq, HttpServletRequest request) {
+    @RequestMapping("/card_consume.html")
+    public ModelAndView cardConsume(HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView();
         CardInfo cardInfo = (CardInfo)request.getSession().getAttribute("cardInfo");
-        cardService.cardTrade(cardTradeReq, cardInfo.getCardNumber());
-        cardInfo = cardService.findCardByNumber(cardInfo.getCardNumber());
-        return null;
+        modelAndView.setViewName("card_consume");
+        modelAndView.addObject("cardNumber", cardInfo.getCardNumber());
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/card_consume_do", method = RequestMethod.POST)
+    @ResponseBody
+    public Object cardConsumeDo(CardTradeReq cardTradeReq, HttpServletRequest request) {
+        CardInfo cardInfo = cardService.findCardByNumber(cardTradeReq.cardNumber);
+        HashMap<String, String> res = new HashMap<>();
+        try {
+            cardService.cardTrade(cardTradeReq, cardInfo.getCardNumber());
+            res.put("msg", "消费成功");
+        } catch (RuntimeException e) {
+            res.put("msg", e.getMessage());
+        }
+        return res;
+    }
+
+    /**
+     * 充值
+     */
+    @RequestMapping("/card_charge.html")
+    public ModelAndView cardCharge(CardTradeReq cardTradeReq, HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView();
+        CardInfo cardInfo = (CardInfo)request.getSession().getAttribute("cardInfo");
+        modelAndView.setViewName("card_charge");
+        modelAndView.addObject("cardNumber", cardInfo.getCardNumber());
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/card_charge_do", method = RequestMethod.POST)
+    @ResponseBody
+    public Object cardChargeDo(CardTradeReq cardTradeReq, HttpServletRequest request) {
+        CardInfo cardInfo = (CardInfo)request.getSession().getAttribute("cardInfo");
+        HashMap<String, String> res = new HashMap<>();
+        try {
+            cardService.cardTrade(cardTradeReq, cardInfo.getCardNumber());
+            res.put("msg", "充值成功");
+        } catch (RuntimeException e) {
+            res.put("msg", e.getMessage());
+        }
+        return res;
     }
 
     /**
@@ -50,7 +94,7 @@ public class CardTradeController {
             // 普通用户只能查询自己的账单
             queryCardBillLogReq.cardNumber = cardInfo.getCardNumber();
         }
-        cardBillRecordRepository.queryByCondition(queryCardBillLogReq);
+        cardOperateRecordDTOList = cardBillRecordRepository.queryByCondition(queryCardBillLogReq);
         ModelAndView modelAndView = new ModelAndView("card_bill_log");
         modelAndView.addObject("cardOperateRecordDTOList", cardOperateRecordDTOList);
         return modelAndView;

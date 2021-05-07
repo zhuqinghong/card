@@ -157,6 +157,7 @@ public class CardInfo {
         // trade
         this.balance = this.balance + cardTradeReq.amount;
         CardBillRecordDTO cardBillRecordDTO = new CardBillRecordDTO();
+        cardBillRecordDTO.setCardNumber(cardNumber);
         cardBillRecordDTO.setAmount(cardTradeReq.amount);
         cardBillRecordDTO.setAfterAmount(this.balance);
         cardBillRecordDTO.setType(cardTradeReq.type);
