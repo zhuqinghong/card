@@ -6,12 +6,29 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <script src="js/jquery-3.2.1.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <jsp:include page="admin_header.jsp"></jsp:include>
+    <%--    <jsp:include page="admin_header.jsp"></jsp:include>--%>
     <%@ page import="com.card.domain.enums.CardOperateEnum" %>
+    <%--</head>--%>
+    <%--<body background="img/admin_img.jpeg" style=" background-repeat:no-repeat ;--%>
+    <%--background-size:100% 100%;--%>
+    <%--background-attachment: fixed;">--%>
+    <c:if test="${cardInfo.isAdmin()}">
+        <jsp:include page="admin_header.jsp"></jsp:include>
+    </c:if>
+    <c:if test="${!cardInfo.isAdmin()}">
+        <jsp:include page="user_header.jsp"></jsp:include>
+    </c:if>
 </head>
-<body background="img/book1.jpg" style=" background-repeat:no-repeat ;
+<c:if test="${cardInfo.isAdmin()}">
+<body background="img/admin_img.jpeg" style=" background-repeat:no-repeat ;
 background-size:100% 100%;
 background-attachment: fixed;">
+</c:if>
+<c:if test="${!cardInfo.isAdmin()}">
+<body background="img/system_user.jpeg" style=" background-repeat:no-repeat ;
+background-size:100% 100%;
+background-attachment: fixed;">
+</c:if>
 
 <div id="header"></div>
 

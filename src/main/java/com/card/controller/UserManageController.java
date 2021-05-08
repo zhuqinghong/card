@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.card.domain.entity.CardInfo;
 import com.card.domain.entity.UserCard;
 import com.card.domain.entity.UserInfo;
 import com.card.domain.req.CreateOrUpdateUserReq;
@@ -29,9 +30,14 @@ public class UserManageController {
     private UserCardService userCardService;
 
     @RequestMapping("/admin_user_list")
-    public ModelAndView adminUserList(QueryUserInfoReq queryUserInfoReq) {
+    public ModelAndView adminUserList(QueryUserInfoReq queryUserInfoReq, HttpServletRequest request) {
         if (queryUserInfoReq == null) {
             queryUserInfoReq = new QueryUserInfoReq();
+        }
+        CardInfo cardInfo = (CardInfo)request.getSession().getAttribute("cardInfo");
+        if (!cardInfo.isAdmin()) {
+            // 普通用户只能看自己的信息
+            queryUserInfoReq.cardNumber = cardInfo.getCardNumber();
         }
         List<UserInfo> userInfos = userService.queryUserInfoByCondition(queryUserInfoReq);
         ModelAndView modelAndView = new ModelAndView("admin_user_list");
@@ -56,6 +62,7 @@ public class UserManageController {
         UserCard userCard = userCardService.findUserCardByUserId(userId);
         ModelAndView modelAndView = new ModelAndView("admin_user_edit");
         modelAndView.addObject("userCard", userCard);
+        request.getSession().setAttribute("cardInfo", userCard.cardInfo);
         return modelAndView;
     }
 

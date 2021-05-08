@@ -121,17 +121,9 @@ background-attachment: fixed;">
                     success: function(data) {
                         if (data.stateCode.trim() === "0") {
                             $("#info").text("提示:账号或密码错误！");
-                        } else if (data.stateCode.trim() === "1") {
+                        } else {
                             $("#info").text("提示:登陆成功，跳转中...");
                             window.location.href="admin_main.html";
-                        } else if (data.stateCode.trim() === "2") {
-                            if(remember){
-                                rememberLogin(id,passwd,remember);
-                            }else {
-                                Cookies.remove('loginStatus');
-                            }
-                            $("#info").text("提示:登陆成功，跳转中...");
-                            window.location.href = "user_main.html";
                         }
                     }
                 });

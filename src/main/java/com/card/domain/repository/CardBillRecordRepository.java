@@ -34,4 +34,11 @@ public class CardBillRecordRepository {
     public List<CardBillRecordDTO> queryByCondition(QueryCardBillLogReq queryCardBillLogReq) {
         return cardBillRecordDTOExtendMapper.queryByCondition(queryCardBillLogReq);
     }
+
+    /**
+     * 删除流水
+     */
+    public void delCardBillRecord(int id) {
+        cardBillRecordDTOMapper.deleteByPrimaryKey(id);
+    }
 }

@@ -65,8 +65,8 @@ public class LoginController {
     }
 
     @RequestMapping("/admin_main.html")
-    public ModelAndView toAdminMain(HttpServletResponse response) {
-        return new ModelAndView("admin_main");
+    public String toAdminMain(HttpServletResponse response) {
+        return "redirect:/admin_user_list.html";
     }
 
     @RequestMapping("/user_main.html")

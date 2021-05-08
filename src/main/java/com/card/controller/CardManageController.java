@@ -34,7 +34,12 @@ public class CardManageController {
     private CardOperateRecordRepository cardOperateRecordRepository;
 
     @RequestMapping("/admin_card_list.html")
-    public ModelAndView adminCardList(QueryCardInfoReq queryCardInfoReq) {
+    public ModelAndView adminCardList(QueryCardInfoReq queryCardInfoReq, HttpServletRequest request) {
+        CardInfo cardInfo = (CardInfo)request.getSession().getAttribute("cardInfo");
+        if (!cardInfo.isAdmin()) {
+            // 普通用户只能看自己的信息
+            queryCardInfoReq.cardNumber = cardInfo.getCardNumber();
+        }
         List<CardInfo> cardInfoList = cardService.queryCardInfoByCondition(queryCardInfoReq);
         ModelAndView modelAndView = new ModelAndView("admin_card_list");
         modelAndView.addObject("cardInfoList", cardInfoList);
@@ -105,6 +110,11 @@ public class CardManageController {
      */
     @RequestMapping("/admin_card_log.html")
     public ModelAndView adminCardLog(QueryCardOperateLogReq queryCardOperateLogReq, HttpServletRequest request) {
+        CardInfo cardInfo = (CardInfo)request.getSession().getAttribute("cardInfo");
+        if (!cardInfo.isAdmin()) {
+            // 普通用户只能看自己的信息
+            queryCardOperateLogReq.cardNumber = cardInfo.getCardNumber();
+        }
         List<CardOperateRecordDTO> cardOperateRecordDTOList = cardOperateRecordRepository.queryByCondition(queryCardOperateLogReq);
         ModelAndView modelAndView = new ModelAndView("admin_card_log");
         modelAndView.addObject("cardOperateRecordDTOList", cardOperateRecordDTOList);

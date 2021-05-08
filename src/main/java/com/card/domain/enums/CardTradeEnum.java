@@ -6,6 +6,16 @@ package com.card.domain.enums;
  * @author qinghong.zhu
  */
 public enum CardTradeEnum {
-    CHARGE,
-    CONSUMING
+    CHARGE("充值"),
+    CONSUMING("消费");
+
+    public String desc;
+
+    CardTradeEnum(String desc) {
+        this.desc = desc;
+    }
+
+    public static String getDesc(String cardTradeEnum) {
+        return valueOf(cardTradeEnum).desc;
+    }
 }

@@ -13,9 +13,16 @@
         <jsp:include page="user_header.jsp"></jsp:include>
     </c:if>
 </head>
-<body background="img/lizhi.jpg" style=" background-repeat:no-repeat ;
+<c:if test="${cardInfo.isAdmin()}">
+<body background="img/admin_img.jpeg" style=" background-repeat:no-repeat ;
 background-size:100% 100%;
 background-attachment: fixed;">
+</c:if>
+<c:if test="${!cardInfo.isAdmin()}">
+<body background="img/system_user.jpeg" style=" background-repeat:no-repeat ;
+background-size:100% 100%;
+background-attachment: fixed;">
+</c:if>
 <%--<div id="header"></div>--%>
 <div style="padding-top: 100px;">
 <div class="col-xs-6 col-md-offset-3" style="position: relative;">
@@ -56,8 +63,8 @@ background-attachment: fixed;">
                 </div>
             </form>
         </div>
-        </div>
     </div>
+</div>
 </div>
 
 <script>

@@ -8,12 +8,15 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.card.dao.dto.CardBillRecordDTO;
 import com.card.domain.entity.CardInfo;
+import com.card.domain.entity.UserInfo;
 import com.card.domain.repository.CardBillRecordRepository;
 import com.card.domain.req.CardTradeReq;
 import com.card.domain.req.QueryCardBillLogReq;
 import com.card.domain.service.CardService;
+import com.card.domain.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,6 +34,8 @@ public class CardTradeController {
     private CardBillRecordRepository cardBillRecordRepository;
     @Autowired
     private CardService cardService;
+    @Autowired
+    private UserService userService;
     /**
      * 消费
      */
@@ -49,6 +54,9 @@ public class CardTradeController {
         CardInfo cardInfo = cardService.findCardByNumber(cardTradeReq.cardNumber);
         HashMap<String, String> res = new HashMap<>();
         try {
+            if (!cardInfo.checkOutPassword(cardTradeReq.cardPassword)) {
+                throw new RuntimeException("密码错误");
+            }
             cardService.cardTrade(cardTradeReq, cardInfo.getCardNumber());
             res.put("msg", "消费成功");
         } catch (RuntimeException e) {
@@ -72,9 +80,16 @@ public class CardTradeController {
     @RequestMapping(value = "/card_charge_do", method = RequestMethod.POST)
     @ResponseBody
     public Object cardChargeDo(CardTradeReq cardTradeReq, HttpServletRequest request) {
-        CardInfo cardInfo = (CardInfo)request.getSession().getAttribute("cardInfo");
+        CardInfo cardInfo = cardService.findCardByNumber(cardTradeReq.cardNumber);
+        UserInfo userInfo = userService.getUserInfoById(cardInfo.getUserId());
         HashMap<String, String> res = new HashMap<>();
         try {
+            if (!cardInfo.checkOutPassword(cardTradeReq.cardPassword)) {
+                throw new RuntimeException("密码错误");
+            }
+            if (StringUtils.isEmpty(userInfo.getPayAccountNumber())) {
+                throw new RuntimeException("请先绑定银行卡");
+            }
             cardService.cardTrade(cardTradeReq, cardInfo.getCardNumber());
             res.put("msg", "充值成功");
         } catch (RuntimeException e) {
@@ -98,5 +113,15 @@ public class CardTradeController {
         ModelAndView modelAndView = new ModelAndView("card_bill_log");
         modelAndView.addObject("cardOperateRecordDTOList", cardOperateRecordDTOList);
         return modelAndView;
+    }
+
+    /**
+     * 卡片交易流水删除
+     */
+    @RequestMapping("/card_bill_log_delete.html")
+    public String cardBillLogDelete(HttpServletRequest request) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        cardBillRecordRepository.delCardBillRecord(id);
+        return "redirect:card_bill_log.html";
     }
 }
