@@ -111,6 +111,9 @@ background-attachment: fixed;">
                     <c:if test="${cardInfo.isAdmin()}">
                         <td>锁定</td>
                     </c:if>
+                    <c:if test="${cardInfo.isAdmin()}">
+                        <td>补办</td>
+                    </c:if>
                 </tr>
                 </thead>
                 <tbody>
@@ -127,7 +130,7 @@ background-attachment: fixed;">
                         </a></td>
                         <c:if test="${cardInfo.isAdmin()}">
                             <td>
-                                <a href="admin_card_delete.html?userId=<c:out value="${card.userId}"></c:out>">
+                                <a href="admin_card_delete.html?cardNumber=<c:out value="${card.cardNumber}"></c:out>">
                                     <button type="button" class="btn btn-danger btn-xs">删除</button>
                                 </a>
                             </td>
@@ -146,6 +149,13 @@ background-attachment: fixed;">
                             <td>
                                 <a href="card_suspend.html?cardNumber=<c:out value="${card.cardNumber}"></c:out>">
                                     <button type="button" class="btn btn-danger btn-xs">锁定</button>
+                                </a>
+                            </td>
+                        </c:if>
+                        <c:if test="${cardInfo.isAdmin()}">
+                            <td>
+                                <a href="card_readd.html?cardNumber=<c:out value="${card.cardNumber}"></c:out>">
+                                    <button type="button" class="btn btn-danger btn-xs">补办</button>
                                 </a>
                             </td>
                         </c:if>

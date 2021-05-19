@@ -69,7 +69,20 @@ public class CardManageController {
      * 删除卡片，目前卡片信息和用户信息做一个强依赖，删除卡片= 删除用户+删除卡片
      */
     @RequestMapping("/admin_card_delete.html")
-    public String adminCardDelete(@RequestParam("userId") Integer userId, HttpServletRequest request) {
+    public ModelAndView adminCardDelete(HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin_card_delete");
+        int cardNumber = Integer.parseInt(request.getParameter("cardNumber"));
+        CardInfo cardInfo = cardService.findCardByNumber(cardNumber);
+        modelAndView.addObject("cardInfo", cardInfo);
+        return modelAndView;
+    }
+
+    /**
+     * 删除卡片，目前卡片信息和用户信息做一个强依赖，删除卡片= 删除用户+删除卡片
+     */
+    @RequestMapping("/admin_card_delete_do.html")
+    public String adminCardDeleteDo(@RequestParam("userId") Integer userId, HttpServletRequest request) {
         UserInfo currentUser = (UserInfo)request.getSession().getAttribute("userInfo");
         userCardService.deleteUserCard(userId, currentUser.getId());
         return "redirect:/admin_card_list.html";
@@ -79,7 +92,20 @@ public class CardManageController {
      * 卡片挂失
      */
     @RequestMapping("/card_missing.html")
-    public String setCardMissing(@RequestParam("cardNumber") Integer cardNumber, HttpServletRequest request) {
+    public ModelAndView setCardMissing(HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin_card_missing");
+        int cardNumber = Integer.parseInt(request.getParameter("cardNumber"));
+        CardInfo cardInfo = cardService.findCardByNumber(cardNumber);
+        modelAndView.addObject("cardInfo", cardInfo);
+        return modelAndView;
+    }
+
+    /**
+     * 卡片挂失
+     */
+    @RequestMapping("/card_missing_do.html")
+    public String setCardMissingDo(@RequestParam("cardNumber") Integer cardNumber, HttpServletRequest request) {
         UserInfo currentUser = (UserInfo)request.getSession().getAttribute("userInfo");
         cardService.missCard(cardNumber, currentUser.getId());
         return "redirect:/admin_card_list.html";
@@ -89,7 +115,20 @@ public class CardManageController {
      * 卡片激活
      */
     @RequestMapping("/card_active.html")
-    public String setCardActive(@RequestParam("cardNumber") Integer cardNumber, HttpServletRequest request) {
+    public ModelAndView setCardActive(HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin_card_active");
+        int cardNumber = Integer.parseInt(request.getParameter("cardNumber"));
+        CardInfo cardInfo = cardService.findCardByNumber(cardNumber);
+        modelAndView.addObject("cardInfo", cardInfo);
+        return modelAndView;
+    }
+
+    /**
+     * 卡片激活
+     */
+    @RequestMapping("/card_active_do.html")
+    public String setCardActiveDo(@RequestParam("cardNumber") Integer cardNumber, HttpServletRequest request) {
         UserInfo currentUser = (UserInfo)request.getSession().getAttribute("userInfo");
         cardService.activeCard(cardNumber, currentUser.getId());
         return "redirect:/admin_card_list.html";
@@ -99,7 +138,20 @@ public class CardManageController {
      * 卡片锁定
      */
     @RequestMapping("/card_suspend.html")
-    public String setCardSuspend(@RequestParam("cardNumber") Integer cardNumber, HttpServletRequest request) {
+    public ModelAndView setCardSuspend(HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin_card_suspend");
+        int cardNumber = Integer.parseInt(request.getParameter("cardNumber"));
+        CardInfo cardInfo = cardService.findCardByNumber(cardNumber);
+        modelAndView.addObject("cardInfo", cardInfo);
+        return modelAndView;
+    }
+
+    /**
+     * 卡片锁定
+     */
+    @RequestMapping("/card_suspend_do.html")
+    public String setCardSuspendDo(@RequestParam("cardNumber") Integer cardNumber, HttpServletRequest request) {
         UserInfo currentUser = (UserInfo)request.getSession().getAttribute("userInfo");
         cardService.suspendCard(cardNumber, currentUser.getId());
         return "redirect:/admin_card_list.html";
@@ -128,5 +180,28 @@ public class CardManageController {
     public String adminCardLog(HttpServletRequest request) {
         cardOperateRecordRepository.deleteRecord(Integer.parseInt(request.getParameter("id")));
         return "redirect:/admin_card_log.html";
+    }
+
+    /**
+     * 卡片补办
+     */
+    @RequestMapping("/card_readd.html")
+    public ModelAndView setCardReAdd(HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin_card_readd");
+        int cardNumber = Integer.parseInt(request.getParameter("cardNumber"));
+        CardInfo cardInfo = cardService.findCardByNumber(cardNumber);
+        modelAndView.addObject("cardInfo", cardInfo);
+        return modelAndView;
+    }
+
+    /**
+     * 卡片激活
+     */
+    @RequestMapping("/card_card_readd_do.html")
+    public String setCardReAddDo(@RequestParam("cardNumber") Integer cardNumber, HttpServletRequest request) {
+        UserInfo currentUser = (UserInfo)request.getSession().getAttribute("userInfo");
+        cardService.activeCard(cardNumber, currentUser.getId());
+        return "redirect:/admin_card_list.html";
     }
 }

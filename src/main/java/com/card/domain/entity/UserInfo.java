@@ -9,7 +9,6 @@ import lombok.Getter;
 /**
  * Created by qinghong.zhu on 2021/4/20.
  * 用户信息
- * @author qinghong.zhu
  */
 @Getter
 public class UserInfo {
@@ -17,52 +16,42 @@ public class UserInfo {
      * 用户id
      */
     private Integer id;
-
     /**
      * 卡号
      */
     private Integer cardNumber;
-
     /**
      * 姓名
      */
     private String name;
-
     /**
      * 出生日期
      */
     private Date birth;
-
     /**
      * 性别
      */
     private String sex;
-
     /**
      * 手机号
      */
     private String phone;
-
     /**
      * 专业
      */
     private String department;
-
     /**
      * 银行卡账户
      */
     private String payAccountNumber;
-
     /**
      * 身份证号
      */
     private String identityCard;
-
     /**
      * 创建时间
      */
     private Date createTime;
-
     public UserInfo(UserInfoDTO userInfoDTO) {
         this.id = userInfoDTO.getId();
         this.cardNumber = userInfoDTO.getCardNumber();
@@ -76,6 +65,9 @@ public class UserInfo {
         this.createTime = userInfoDTO.getCreateTime();
     }
 
+    /**
+     * 编辑用户个人信息
+     */
     public void updateUserInfo(CreateOrUpdateUserReq createOrUpdateUserReq) {
         this.name = createOrUpdateUserReq.name;
         this.birth = createOrUpdateUserReq.birth;
@@ -85,7 +77,6 @@ public class UserInfo {
         this.identityCard = createOrUpdateUserReq.identityCard;
         this.payAccountNumber = createOrUpdateUserReq.payAccountNumber;
     }
-
     /**
      * 给用户发卡
      */

@@ -15,7 +15,6 @@ import lombok.Getter;
 /**
  * Created by qinghong.zhu on 2021/4/20. 一卡通信息
  *
- * @author qinghong.zhu
  */
 @Getter
 public class CardInfo {
@@ -23,37 +22,30 @@ public class CardInfo {
      * 一卡通卡号
      */
     private Integer cardNumber;
-
     /**
      * 一卡通登录查询密码
      */
     private String cardPassword;
-
     /**
      * 一卡通状态
      */
     private String cardStatus;
-
     /**
      * 卡片类型
      */
     private CardTypeEnum cardTypeEnum;
-
     /**
      * 一卡通用户id
      */
     private Integer userId;
-
     /**
      * 一卡通账户余额
      */
     private Integer balance;
-
     /**
      * 卡片创建日期
      */
     private Date createTime;
-
     public CardInfo(CardInfoDTO cardInfoDTO) {
         this.cardNumber = cardInfoDTO.getCardNumber();
         this.cardPassword = cardInfoDTO.getCardPassword();
@@ -63,28 +55,24 @@ public class CardInfo {
         this.balance = cardInfoDTO.getBalance();
         this.createTime = cardInfoDTO.getCreateTime();
     }
-
     /**
      * 校验密码是否正确
      */
     public boolean checkOutPassword(String passwd) {
         return this.cardPassword.equals(passwd);
     }
-
     /**
      * 是否是管理员
      */
     public boolean isAdmin() {
         return this.cardTypeEnum.isAdmin();
     }
-
     /**
      * 卡片下发给用户
      */
     public void sendCard(Integer userId) {
         this.userId = userId;
     }
-
     /**
      * 修改卡片信息
      */
@@ -96,7 +84,6 @@ public class CardInfo {
         this.balance = createOrUpdateCardReq.balance;
         return generateOperateRecord(operateId, CardOperateEnum.UPDATE_CARD.name());
     }
-
     /**
      * 卡片挂失
      */
@@ -104,7 +91,6 @@ public class CardInfo {
         this.cardStatus = CardStatusEnum.MISSING.name();
         return generateOperateRecord(operateId, CardOperateEnum.MISSING_CARD.name());
     }
-
     /**
      * 卡片激活
      */
@@ -112,7 +98,6 @@ public class CardInfo {
         this.cardStatus = CardStatusEnum.ACTIVE.name();
         return generateOperateRecord(operateId, CardOperateEnum.ACTIVE_CARD.name());
     }
-
     /**
      * 卡片锁定
      */
@@ -120,14 +105,12 @@ public class CardInfo {
         this.cardStatus = CardStatusEnum.SUSPEND.name();
         return generateOperateRecord(operateId, CardOperateEnum.SUSPEND_CARD.name());
     }
-
     /**
      * 卡片删除
      */
     public CardOperateRecordDTO deleteCard(int operateId) {
         return generateOperateRecord(operateId, CardOperateEnum.DELETED_CARD.name());
     }
-
     /**
      * 密码修改
      */
@@ -135,18 +118,6 @@ public class CardInfo {
         this.cardPassword = newCardPassword;
         return generateOperateRecord(operateId, CardOperateEnum.RE_PASSWORD.name());
     }
-
-    /**
-     * 生成卡片操作日志
-     */
-    public CardOperateRecordDTO generateOperateRecord(int operateId, String type) {
-        CardOperateRecordDTO cardOperateRecordDTO = new CardOperateRecordDTO();
-        cardOperateRecordDTO.setCardNumber(cardNumber);
-        cardOperateRecordDTO.setOperatorId(operateId);
-        cardOperateRecordDTO.setType(type);
-        return cardOperateRecordDTO;
-    }
-
     /**
      * 卡片消费/充值
      */
@@ -165,6 +136,16 @@ public class CardInfo {
         return cardBillRecordDTO;
     }
 
+    /**
+     * 生成卡片操作日志
+     */
+    public CardOperateRecordDTO generateOperateRecord(int operateId, String type) {
+        CardOperateRecordDTO cardOperateRecordDTO = new CardOperateRecordDTO();
+        cardOperateRecordDTO.setCardNumber(cardNumber);
+        cardOperateRecordDTO.setOperatorId(operateId);
+        cardOperateRecordDTO.setType(type);
+        return cardOperateRecordDTO;
+    }
     /**
      * 获取卡片信息CardInfoDTO
      */
